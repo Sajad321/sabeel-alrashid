@@ -4,7 +4,7 @@
 
   var SC_LOGO = "https://www.superchicken-iq.com/wp-content/uploads/2022/06/cropped-logo-2-270x270.png";
   var AR_LOGO = "assets/brands/alrukn-logo.png";
-  var MAP_IMG = "assets/baghdad-map-crop.png";
+  var MAP_IMG = "assets/baghdad-map-white.png";
 
   var SC = {ar:"سوبر تشيكن", en:"Super Chicken", logo:SC_LOGO, cls:"sc"};
   var AR = {ar:"الركن الشرقي", en:"Alrukn Alsharqi", logo:AR_LOGO, cls:"ar"};
@@ -51,7 +51,7 @@
       var p=document.createElement("button");
       p.type="button"; p.className="gpin gpin--"+b.brand.cls; p.setAttribute("data-i",i);
       p.style.left=b.xPct+"%"; p.style.top=b.yPct+"%";
-      p.innerHTML='<span class="gpin__body"><img src="'+b.brand.logo+'" alt=""></span>';
+      p.innerHTML='<span class="gpin__num"><img src="'+b.brand.logo+'" alt=""></span>';
       p.addEventListener("click",function(){ setActive(i,true); });
       p.addEventListener("mouseenter",function(){ setActive(i,false); });
       pinWrap.appendChild(p);

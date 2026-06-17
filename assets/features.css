@@ -52,7 +52,7 @@ html[dir="rtl"] .carousel__arrow span{display:inline-block;transform:scaleX(-1)}
 .carousel--full .carousel__arrow--next{inset-inline-end:clamp(14px,3vw,34px)}
 
 /* ---- brands strip (static grid) ---- */
-.brandstrip{background:linear-gradient(180deg,#f4ede1,#e9e0cf);color:var(--ink-900);overflow:hidden;padding-block:clamp(40px,5vw,68px)}
+.brandstrip{background:var(--paper-2);color:var(--ink-900);overflow:hidden;padding-block:clamp(48px,6vw,80px)}
 .brandstrip__head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:28px}
 .brandstrip__head .eyebrow{color:var(--bronze);margin-bottom:.5rem}
 .brandstrip__head h2{color:var(--ink-900)}
@@ -73,11 +73,13 @@ html[dir="rtl"] .carousel__arrow span{display:inline-block;transform:scaleX(-1)}
 
 /* ---- stat band with icons (changeable PNGs) ---- */
 .statband .stat{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
-.stat__ic{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;background:rgba(177,127,72,.1);border:1px solid rgba(177,127,72,.22)}
-.stat__ic img{width:34px;height:34px;object-fit:contain;display:block}
+.stat__ic{width:74px;height:74px;border-radius:20px;display:grid;place-items:center;background:rgba(40,40,46,.05);border:1px solid rgba(40,40,46,.1);transition:transform .35s var(--ease),background .35s,box-shadow .35s}
+.stat__ic img{width:42px;height:42px;object-fit:contain;display:block;transition:transform .35s var(--ease)}
+.statband .stat:hover .stat__ic{transform:translateY(-6px);background:rgba(40,40,46,.08);box-shadow:0 12px 24px -12px rgba(20,22,28,.4)}
+.statband .stat:hover .stat__ic img{transform:scale(1.12) rotate(-4deg)}
 
 /* ---- branches map section ---- */
-.section--branches{background:var(--paper-2)}
+.section--branches{background:var(--paper)}
 .branches-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(24px,3vw,40px)}
 
 @media (max-width:900px){

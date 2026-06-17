@@ -1,0 +1,77 @@
+/* =========================================================
+   REVAMP — unified section components (Dec 2026 round)
+   Palette discipline: white (--paper) + soft tint (--paper-2) + gold
+   ========================================================= */
+
+/* ---- section heading: title + text only (no eyebrow kicker) ---- */
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,3.4vw,46px)}
+.sec-head h2{margin:0}
+.sec-head .lead{margin:.6rem 0 0;max-width:52ch}
+
+/* soft alternate section = same hue, faint tint (no new colors) */
+.section--soft{background:var(--paper-2)}
+
+/* ---- brand cards (Halma-style) ---- */
+.brandgrid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.2vw,28px)}
+.bcardx{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+.bcardx:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--gold)}
+.bcardx__top{display:grid;place-items:center;padding:clamp(34px,5vw,64px) 24px;background:#fff;min-height:200px}
+.bcardx__logo{height:clamp(108px,13vw,150px);width:auto;max-width:78%;object-fit:contain;transition:transform .35s var(--ease)}
+.bcardx:hover .bcardx__logo{transform:scale(1.08)}
+.bcardx__body{padding:24px clamp(22px,2.4vw,32px) 28px;border-top:1px solid var(--line-soft);transition:background .35s var(--ease)}
+.bcardx:hover .bcardx__body{background:#fafafa}
+.bcardx__cat{display:block;font-size:.78rem;font-weight:800;letter-spacing:.04em;color:var(--bronze);text-transform:uppercase;margin-bottom:.4rem}
+html[lang="ar"] .bcardx__cat{text-transform:none;letter-spacing:0;font-size:.92rem}
+.bcardx__nm{font-size:clamp(1.4rem,2.2vw,1.85rem);font-weight:800;color:var(--ink-900);margin:0 0 .5rem}
+.bcardx__desc{font-size:.96rem;color:var(--muted);line-height:1.6;margin:0}
+.bcardx:hover .bcardx__desc{color:var(--charcoal)}
+
+/* ---- info card (rounded rectangle: media + body) — who-we-are, brand focus, sustainability ---- */
+.infocard{display:grid;grid-template-columns:1.05fr 1fr;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+.infocard + .infocard{margin-top:clamp(20px,2.4vw,32px)}
+.infocard__media{position:relative;min-height:340px;background:var(--paper-2)}
+.infocard__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.infocard__body{padding:clamp(28px,3.4vw,52px);display:flex;flex-direction:column;justify-content:center}
+.infocard__body h2,.infocard__body h3{margin:0 0 1rem;color:var(--ink-900)}
+.infocard__body h3{font-size:clamp(1.5rem,2.6vw,2.1rem)}
+.infocard__body .lead,.infocard__body p{color:var(--muted);margin:0 0 1.5rem;line-height:1.7}
+.infocard__logo{height:clamp(54px,6vw,74px);width:auto;max-width:200px;object-fit:contain;object-position:right center;margin-bottom:18px}
+html[dir="ltr"] .infocard__logo{object-position:left center}
+/* reversed (image on opposite side) */
+.infocard--rev .infocard__media{order:2}
+.infocard--rev .infocard__body{order:1}
+
+/* facts row inside infocard */
+.infocard__facts{list-style:none;margin:0 0 1.6rem;padding:0;display:flex;gap:clamp(20px,3vw,40px);flex-wrap:wrap}
+.infocard__facts li{display:flex;flex-direction:column;gap:.15em;padding-inline-start:16px;border-inline-start:2px solid var(--gold)}
+.infocard__facts b{font-family:var(--ff-en);font-size:clamp(1.3rem,2vw,1.7rem);color:var(--ink-900);line-height:1}
+html[lang="ar"] .infocard__facts b{font-family:var(--ff-ar)}
+.infocard__facts span{font-size:.84rem;color:var(--muted);font-weight:600}
+
+/* KPI row (brand focus) — gold numbers */
+.infocard__kpis{display:flex;gap:clamp(20px,3vw,40px);margin:0 0 1.6rem;flex-wrap:wrap}
+.infocard__kpis>div{display:flex;flex-direction:column;gap:.15em}
+.infocard__kpis b{font-family:var(--ff-en);font-weight:800;font-size:clamp(1.4rem,2.2vw,1.9rem);line-height:1;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[lang="ar"] .infocard__kpis b{font-family:var(--ff-ar)}
+.infocard__kpis span{font-size:.84rem;color:var(--muted);font-weight:600}
+
+/* ---- division cards: image + caption strip ---- */
+.divgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
+.divcard{display:block;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--line);background:#fff;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.divcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.divcard__media{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paper-2)}
+.divcard__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
+.divcard:hover .divcard__media img{transform:scale(1.06)}
+.divcard__bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 22px;font-weight:800;font-size:1.08rem;color:var(--ink-900);transition:background .3s,color .3s}
+.divcard:hover .divcard__bar{background:var(--gold-grad);color:#fff}
+.divcard__go{color:var(--bronze);font-size:1.1rem;transition:color .3s,transform .3s}
+.divcard:hover .divcard__go{color:#fff;transform:translateX(-4px)}
+html[dir="ltr"] .divcard:hover .divcard__go{transform:translateX(4px)}
+
+@media (max-width:860px){
+  .brandgrid2{grid-template-columns:1fr}
+  .divgrid{grid-template-columns:1fr}
+  .infocard,.infocard--rev .infocard__media,.infocard--rev .infocard__body{grid-template-columns:1fr;order:0}
+  .infocard{grid-template-columns:1fr}
+  .infocard__media{min-height:240px}
+}
