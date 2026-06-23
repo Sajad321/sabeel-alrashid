@@ -2,22 +2,22 @@
 (function(){
   "use strict";
 
-  var SC_LOGO = "https://www.superchicken-iq.com/wp-content/uploads/2022/06/cropped-logo-2-270x270.png";
+  var SC_LOGO = "assets/brands/super-chicken-logo.png";
   var AR_LOGO = "assets/brands/alrukn-logo.png";
-  var MAP_IMG = "assets/baghdad-map-white.png";
+  var MAP_IMG = "assets/baghdad-map-new.jpg";
 
   var SC = {ar:"سوبر تشيكن", en:"Super Chicken", logo:SC_LOGO, cls:"sc"};
   var AR = {ar:"الركن الشرقي", en:"Alrukn Alsharqi", logo:AR_LOGO, cls:"ar"};
   // xPct/yPct = position on the static map image (tuned to the labelled districts)
   var BR = [
-    {brand:SC, side:{ar:"الكرخ",en:"Karkh"},   district:{ar:"الكاظمية",en:"Kadhimiya"},  lat:33.3790, lon:44.3370, xPct:35, yPct:25},
-    {brand:AR, side:{ar:"الكرخ",en:"Karkh"},   district:{ar:"الحارثية",en:"Harthiya"},   lat:33.3180, lon:44.3710, xPct:40, yPct:45},
-    {brand:SC, side:{ar:"الكرخ",en:"Karkh"},   district:{ar:"المنصور",en:"Mansour"},    lat:33.3120, lon:44.3570, xPct:29, yPct:52},
-    {brand:SC, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الأعظمية",en:"Adhamiyah"},  lat:33.3650, lon:44.3680, xPct:53, yPct:28},
-    {brand:AR, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"زيونة",en:"Zayouna"},      lat:33.3450, lon:44.4700, xPct:64, yPct:50},
-    {brand:SC, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الكرادة",en:"Karrada"},   lat:33.3080, lon:44.4080, xPct:50, yPct:60},
-    {brand:AR, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الكرادة الشرقية",en:"East Karrada"}, lat:33.3010, lon:44.4220, xPct:58, yPct:66},
-    {brand:SC, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الجادرية",en:"Al-Jadriya"}, lat:33.2790, lon:44.3880, xPct:47, yPct:72}
+    {brand:SC, side:{ar:"الكرخ",en:"Karkh"},   district:{ar:"الكاظمية",en:"Kadhimiya"},  lat:33.3790, lon:44.3370, xPct:40, yPct:34},
+    {brand:AR, side:{ar:"الكرخ",en:"Karkh"},   district:{ar:"الحارثية",en:"Harthiya"},   lat:33.3180, lon:44.3710, xPct:55, yPct:52},
+    {brand:SC, side:{ar:"الكرخ",en:"Karkh"},   district:{ar:"المنصور",en:"Mansour"},    lat:33.3120, lon:44.3570, xPct:46, yPct:56},
+    {brand:SC, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الأعظمية",en:"Adhamiyah"},  lat:33.3650, lon:44.3680, xPct:49, yPct:38},
+    {brand:AR, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"زيونة",en:"Zayouna"},      lat:33.3450, lon:44.4700, xPct:70, yPct:47},
+    {brand:SC, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الكرادة",en:"Karrada"},   lat:33.3080, lon:44.4080, xPct:62, yPct:61},
+    {brand:AR, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الكرادة الشرقية",en:"East Karrada"}, lat:33.3010, lon:44.4220, xPct:66, yPct:66},
+    {brand:SC, side:{ar:"الرصافة",en:"Rusafa"}, district:{ar:"الجادرية",en:"Al-Jadriya"}, lat:33.2790, lon:44.3880, xPct:55, yPct:69}
   ];
 
   function mapsDir(b){ return "https://www.google.com/maps/dir/?api=1&destination="+b.lat+","+b.lon; }

@@ -23,7 +23,7 @@
 
 /* stat band (light panel) */
 .statband{background:var(--paper-2);border-block:1px solid var(--line-soft)}
-.statband .stat__num .u{color:var(--ink-900)}
+.statband .stat__num .u{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* big-number divisions list */
 .dlist{display:flex;flex-direction:column;border-top:1px solid var(--line)}

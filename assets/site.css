@@ -229,7 +229,7 @@ html[lang="ar"] .footer__col h4{text-transform:none;letter-spacing:.02em;font-si
 .section-head{max-width:64ch}
 .section-head--center{margin-inline:auto;text-align:center}
 
-.stat__num{font-family:var(--ff-en);font-variant-numeric:tabular-nums;font-size:clamp(2.4rem,4vw,3.4rem);font-weight:800;line-height:1;color:var(--ink-900)}
+.stat__num{font-family:var(--ff-en);font-variant-numeric:tabular-nums;font-size:clamp(2.4rem,4vw,3.4rem);font-weight:800;line-height:1;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat__label{color:var(--muted);font-weight:600;font-size:.95rem;margin-top:.5em}
 .section--dark .stat__label,.section--charcoal .stat__label{color:var(--muted-on-dark)}
 
