@@ -206,9 +206,12 @@
     const burger=document.getElementById("burger"),
           menu=document.getElementById("mobileMenu"),
           close=document.getElementById("menuClose");
-    burger && burger.addEventListener("click",()=>menu.classList.add("is-open"));
-    close && close.addEventListener("click",()=>menu.classList.remove("is-open"));
-    menu && menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>menu.classList.remove("is-open")));
+    function openMenu(){ if(!menu)return; menu.classList.add("is-open"); menu.style.transform="translateX(0)"; menu.style.visibility="visible"; document.body.style.overflow="hidden"; }
+    function closeMenu(){ if(!menu)return; menu.classList.remove("is-open"); menu.style.transform=""; menu.style.visibility=""; document.body.style.overflow=""; }
+    burger && burger.addEventListener("click",(e)=>{ e.preventDefault(); menu.classList.contains("is-open")?closeMenu():openMenu(); });
+    close && close.addEventListener("click",closeMenu);
+    menu && menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",closeMenu));
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeMenu(); });
 
     const io=new IntersectionObserver((es)=>{
       es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("is-in");io.unobserve(e.target);}});

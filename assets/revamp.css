@@ -31,9 +31,29 @@ html[lang="ar"] .bcardx__cat{text-transform:none;letter-spacing:0;font-size:.92r
 .bcardx:hover{border-color:transparent}
 
 /* narrower media column variant */
-/* ---- info card (rounded rectangle: media + body) — who-we-are, brand focus, sustainability ---- */
+/* ---- editorial intro lede (open, no card) ---- */
+.introlede{display:grid;grid-template-columns:1fr;gap:clamp(24px,3vw,40px)}
+.introlede__head{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(20px,4vw,56px);align-items:end}
+.introlede__title{font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.01em;color:var(--ink-900);margin:0;max-width:18ch}
+.introlede__lead{font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.75;color:var(--muted);margin:0;text-wrap:pretty}
+.introlede__media{position:relative;width:100%;aspect-ratio:24/7;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+.introlede__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.introlede__bar{display:flex;align-items:center;justify-content:space-between;gap:clamp(20px,3vw,40px);flex-wrap:wrap}
+.introlede__facts{list-style:none;margin:0;padding:0;display:flex;gap:clamp(28px,4vw,64px);flex-wrap:wrap}
+.introlede__facts li{display:flex;flex-direction:column;gap:.2em;padding-inline-start:18px;border-inline-start:3px solid var(--gold)}
+.introlede__facts b{font-family:var(--ff-en);font-size:clamp(1.5rem,2.4vw,2.1rem);color:var(--ink-900);line-height:1}
+html[lang="ar"] .introlede__facts b{font-family:var(--ff-ar)}
+.introlede__facts span{font-size:.86rem;color:var(--muted);font-weight:600}
+@media (max-width:760px){
+  .introlede__head{grid-template-columns:1fr;gap:16px;align-items:start}
+  .introlede__media{aspect-ratio:16/9}
+}
 .infocard{display:grid;grid-template-columns:1.05fr 1fr;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
 .infocard.infocard--narrow{grid-template-columns:25% 75%}
+.infocard--narrow .infocard__media{min-height:0}
+.infocard--narrow .infocard__body{padding:clamp(22px,2.4vw,34px) clamp(24px,2.6vw,40px)}
+.infocard--narrow .infocard__facts{margin-bottom:1.1rem}
+.infocard--narrow .infocard__body .lead,.infocard--narrow .infocard__body p{margin-bottom:1.1rem}
 .infocard + .infocard{margin-top:clamp(20px,2.4vw,32px)}
 .infocard__media{position:relative;min-height:340px;background:var(--paper-2)}
 .infocard__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -81,9 +101,9 @@ html[dir="ltr"] .divcard:hover .divcard__go{transform:translateX(4px)}
 .ncard__media{aspect-ratio:1/1;overflow:hidden;background:var(--paper-2)}
 .ncard__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
 .ncard:hover .ncard__media img{transform:scale(1.06)}
-.ncard__body{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:space-between;padding:22px clamp(18px,1.6vw,24px) 24px;background:linear-gradient(165deg,#2b2b2c,#1a1a1b);color:#fff}
+.ncard__body{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:space-between;padding:22px clamp(18px,1.6vw,24px) 24px;background:linear-gradient(165deg,#b5824a,#8a5a25);color:#fff}
 .ncard__title{font-size:1.06rem;font-weight:700;line-height:1.45;margin:0;color:#fff;text-wrap:pretty}
-.ncard__date{font-family:var(--ff-en);font-size:.86rem;font-weight:700;color:var(--gold-light);letter-spacing:.02em}
+.ncard__date{font-family:var(--ff-en);font-size:.86rem;font-weight:700;color:#fff5e6;letter-spacing:.02em}
 html[lang="ar"] .ncard__date{font-family:var(--ff-ar)}
 
 @media (max-width:1024px){ .newsgrid{grid-template-columns:1fr 1fr} }

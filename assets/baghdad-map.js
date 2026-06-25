@@ -87,9 +87,8 @@
             '<div class="bcard__top"><span class="bcard__brand">'+t(b.brand.ar,b.brand.en)+'</span>'+
               '<span class="bcard__tag '+(isSC?"sc":"ar")+'">'+t(b.side.ar,b.side.en)+'</span></div>'+
             '<div class="bcard__city">⌖ '+t(b.district.ar,b.district.en)+'</div>'+
-            '<div class="bcard__coord"><span>'+b.lat.toFixed(4)+'°N</span><span>'+b.lon.toFixed(4)+'°E</span></div>'+
-            '<a class="bcard__btn bcard__btn--go" target="_blank" rel="noopener" href="'+mapsDir(b)+'">'+t("الاتجاهات","Directions")+' →</a>'+
           '</div>'+
+          '<a class="bcard__btn bcard__btn--go" target="_blank" rel="noopener" href="'+mapsDir(b)+'">'+t("الاتجاهات","Directions")+' →</a>'+
         '</div>';
       }).join("");
       list.querySelectorAll(".bcard").forEach(function(c){
