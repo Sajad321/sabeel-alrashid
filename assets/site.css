@@ -144,6 +144,8 @@ html[dir="ltr"] .btn:hover .arrow{transform:scaleX(-1) translateX(-4px)}
 }
 .ph--dark{background-color:#23211f;background-image:repeating-linear-gradient(135deg,rgba(249,218,164,.06) 0 12px,rgba(249,218,164,0) 12px 24px)}
 .ph--dark::after{color:rgba(249,218,164,.7);border-color:rgba(249,218,164,.3);background:rgba(0,0,0,.25)}
+.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ph:has(>img)::after{display:none}
 
 /* ---------- header ---------- */
 .site-header{
