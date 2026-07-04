@@ -40,24 +40,16 @@
 
   const FCOLS = [
     { h:{ar:"الشركة", en:"Company"}, links:[
-      {href:"about.html",    ar:"من نحن",     en:"About Us"},
-      {href:"about.html",    ar:"قيادتنا",    en:"Leadership"},
-      {href:"brands.html",   ar:"علاماتنا",   en:"Our Brands"},
-      {href:"index.html",    ar:"الاستدامة",  en:"Sustainability"} ]},
-    { h:{ar:"المستثمرون والشركاء", en:"Investors & Partners"}, links:[
-      {href:"franchise.html", ar:"فرص الاستثمار", en:"Investment"},
-      {href:"franchise.html", ar:"طلب امتياز",    en:"Franchise Request"},
-      {href:"contact.html",   ar:"الموردون",      en:"Suppliers"},
-      {href:"contact.html",   ar:"علاقات المستثمرين", en:"Investor Relations"} ]},
-    { h:{ar:"غرفة الأخبار", en:"Newsroom"}, links:[
-      {href:"news.html", ar:"الأخبار",         en:"News"},
-      {href:"news.html", ar:"البيانات الصحفية", en:"Press Releases"},
-      {href:"news.html", ar:"الفعاليات",        en:"Events"},
-      {href:"news.html", ar:"مكتبة الوسائط",    en:"Media Library"} ]},
-    { h:{ar:"الوظائف", en:"Careers"}, links:[
-      {href:"careers.html",       ar:"الوظائف الشاغرة", en:"Open Positions"},
-      {href:"careers.html",       ar:"ثقافتنا",         en:"Our Culture"},
-      {href:"careers.html#apply", ar:"قدّم الآن",        en:"Apply Now"} ]}
+      {href:"index.html",   ar:"الرئيسية",  en:"Home"},
+      {href:"about.html",   ar:"من نحن",    en:"About Us"},
+      {href:"brands.html",  ar:"علاماتنا",  en:"Our Brands"} ]},
+    { h:{ar:"الأعمال", en:"Business"}, links:[
+      {href:"franchise.html", ar:"الامتياز", en:"Franchise"},
+      {href:"careers.html",   ar:"الوظائف",  en:"Careers"},
+      {href:"apply.html",     ar:"قدّم الآن",  en:"Apply Now"} ]},
+    { h:{ar:"الإعلام", en:"Media"}, links:[
+      {href:"news.html",    ar:"الأخبار",     en:"News"},
+      {href:"contact.html", ar:"تواصل معنا",  en:"Contact"} ]}
   ];
 
   const R = (typeof window!=="undefined" && window.__resources) || {};
@@ -113,11 +105,9 @@
     if(host) host.outerHTML = html; else document.body.insertAdjacentHTML("afterbegin", html);
   }
 
-  /* ---------- build footer (Yum-style) ---------- */
+  /* ---------- build footer (organized by pages) ---------- */
   function buildFooter(){
     const social = ["in","X","f","◎"].map(s=>`<a href="#" aria-label="social">${s}</a>`).join("");
-    const brandRow = BRANDS.map(b=>`<a class="footer__brandchip" href="brands.html" data-en="${b.en}">${b.ar}</a>`).join("")
-      + `<span class="footer__brandchip footer__brandchip--soon" data-en="${T.soon.en}">${T.soon.ar}</span>`;
     const cols = FCOLS.map(c=>`
       <div class="footer__col">
         <h4 data-en="${c.h.en}">${c.h.ar}</h4>
@@ -130,7 +120,6 @@
         <div class="footer__grid">
           <div class="footer__brand">
             <img src="${LOGO}" alt="Sabeel Al-Rashid" id="footLogo">
-            <p data-en="${T.tagline.en}">${T.tagline.ar}</p>
             <div class="footer__social">${social}</div>
           </div>
           ${cols}
@@ -140,18 +129,11 @@
               <li><a href="contact.html" data-en="${T.fAddr.en}">${T.fAddr.ar}</a></li>
               <li><a href="tel:+9647700000000" dir="ltr" style="display:inline-block">+964 770 000 0000</a></li>
               <li><a href="mailto:info@sabeelalrashid.com">info@sabeelalrashid.com</a></li>
-              <li><a href="mailto:careers@sabeelalrashid.com">careers@sabeelalrashid.com</a></li>
             </ul>
           </div>
         </div>
         <div class="footer__bottom">
           <span data-en="${T.fRights.en}">${T.fRights.ar}</span>
-          <span class="footer__legal">
-            <a href="#" data-en="Privacy Policy">سياسة الخصوصية</a>
-            <a href="#" data-en="Terms">الشروط والأحكام</a>
-            <a href="#" data-en="Cookies">ملفات الارتباط</a>
-            <a href="#" data-en="Accessibility">إمكانية الوصول</a>
-          </span>
           <button class="footer__totop" type="button" id="toTop"><span data-en="${T.back.en}">${T.back.ar}</span> ↑</button>
         </div>
       </div>

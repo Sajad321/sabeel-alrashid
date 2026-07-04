@@ -13,7 +13,8 @@
 <body>
 <div id="site-header"></div>
 
-<section class="page-hero page-hero--teal" data-screen-label="About / Banner">
+<section class="page-hero" data-screen-label="About / Banner">
+  <div class="page-hero__media"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1900&q=75&auto=format&fit=crop" alt=""></div>
   <div class="container page-hero__inner">
     <nav class="breadcrumb">
       <a href="index.html" data-en="Home">الرئيسية</a><span class="sep">/</span>
@@ -65,20 +66,15 @@
   <div class="container">
     <div class="vm-grid">
       <div class="vm-card reveal">
-        <span class="num">01</span>
+        <span class="vm-ic vm-ic--vision" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12z"></path><circle class="pupil" cx="12" cy="12" r="3"></circle></svg></span>
         <h3 class="h3" data-en="Our Vision">رؤيتنا</h3>
         <p data-en="To be the region's most trusted house of food brands — admired for quality, governance and the way we grow.">أن نكون البيت الأكثر ثقةً للعلامات الغذائية في المنطقة — محلّ تقديرٍ للجودة والحوكمة وأسلوب النمو.</p>
       </div>
       <div class="vm-card reveal" data-d="1">
-        <span class="num">02</span>
+        <span class="vm-ic vm-ic--mission" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9" stroke-dasharray="4 3"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"></circle></svg></span>
         <h3 class="h3" data-en="Our Mission">رسالتنا</h3>
         <p data-en="To build, operate and scale food brands through integrated production, disciplined operations, and partnerships that last.">أن نبني العلامات الغذائية ونُشغّلها ونوسّعها عبر إنتاجٍ متكامل وعملياتٍ منضبطة وشراكاتٍ باقية.</p>
       </div>
-    </div>
-    <div class="value-row reveal" data-d="1" style="margin-top:48px">
-      <div class="value"><span class="num">01</span><h3 data-en="Quality first">الجودة أولاً</h3><p data-en="Consistency and food safety are non-negotiable, at every branch.">الاتساق وسلامة الغذاء لا تقبل المساومة، في كل فرع.</p></div>
-      <div class="value"><span class="num">02</span><h3 data-en="Integrity">النزاهة</h3><p data-en="Transparent, investor-grade governance in everything we do.">حوكمةٌ شفّافة بمعايير المستثمرين في كل ما نقوم به.</p></div>
-      <div class="value"><span class="num">03</span><h3 data-en="Partnership">الشراكة</h3><p data-en="We grow by making our partners and people succeed.">ننمو بإنجاح شركائنا وأفراد فريقنا.</p></div>
     </div>
   </div>
 </section>
@@ -94,35 +90,6 @@
       <div class="team-card reveal" data-d="1"><div class="ph" data-label="صورة" data-label-en="PORTRAIT"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=75&auto=format&fit=crop" alt="" loading="lazy"></div><div class="team-card__body"><h3 data-en="Chief Executive Officer">الرئيس التنفيذي</h3><div class="team-card__role" data-en="Group Operations">عمليات المجموعة</div></div></div>
       <div class="team-card reveal" data-d="2"><div class="ph" data-label="صورة" data-label-en="PORTRAIT"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=75&auto=format&fit=crop" alt="" loading="lazy"></div><div class="team-card__body"><h3 data-en="Chief Financial Officer">المدير المالي</h3><div class="team-card__role" data-en="Finance & Investment">المالية والاستثمار</div></div></div>
       <div class="team-card reveal" data-d="3"><div class="ph" data-label="صورة" data-label-en="PORTRAIT"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=75&auto=format&fit=crop" alt="" loading="lazy"></div><div class="team-card__body"><h3 data-en="Chief Operating Officer">مدير العمليات</h3><div class="team-card__role" data-en="Restaurants & Supply">المطاعم والإمداد</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- org structure -->
-<section class="section">
-  <div class="container">
-    <div class="section-head section-head--center reveal" style="margin-bottom:48px">
-      <h2 class="h2" data-en="Company structure">الهيكل التنظيمي</h2>
-    </div>
-    <div class="org reveal">
-      <div class="org-node org-node--lead"><span data-en="Board of Directors">مجلس الإدارة</span><small data-en="Governance">الحوكمة</small></div>
-      <div class="org-line"></div>
-      <div class="org-node"><span data-en="Group CEO">الرئيس التنفيذي للمجموعة</span></div>
-      <div class="org-line"></div>
-      <div class="org-row">
-        <div class="org-branch">
-          <div class="org-node"><span data-en="Restaurant Management">إدارة المطاعم</span><small data-en="Brands & Operations">العلامات والعمليات</small></div>
-        </div>
-        <div class="org-branch">
-          <div class="org-node"><span data-en="Food Production">إنتاج الأغذية</span><small data-en="Kitchens & Packaging">المطابخ والتعبئة</small></div>
-        </div>
-        <div class="org-branch">
-          <div class="org-node"><span data-en="General Trade">التجارة العامة</span><small data-en="Sourcing & Supply">التوريد والإمداد</small></div>
-        </div>
-        <div class="org-branch">
-          <div class="org-node"><span data-en="Corporate">الدعم المؤسسي</span><small data-en="Finance · HR · Marketing">المالية · الموارد · التسويق</small></div>
-        </div>
-      </div>
     </div>
   </div>
 </section>

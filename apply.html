@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>قدّم الآن · سبيل الراشد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="page-hero" data-screen-label="Apply / Banner">
+  <div class="page-hero__media"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1900&q=75&auto=format&fit=crop" alt=""></div>
+  <div class="container page-hero__inner">
+    <nav class="breadcrumb">
+      <a href="index.html" data-en="Home">الرئيسية</a><span class="sep">/</span>
+      <a href="careers.html" data-en="Careers">الوظائف</a><span class="sep">/</span>
+      <span data-en="Apply">قدّم الآن</span>
+    </nav>
+    <h1 class="h1" data-en="Job application">طلب توظيف</h1>
+    <p data-en="Fill in your details below — fields marked * are required. We review every application.">املأ بياناتك أدناه — الحقول المعلّمة بـ * إلزامية. نراجع كل طلب.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:920px">
+    <form class="form reveal" data-mailto="careers@sabeelalrashid.com" data-subject="Job Application — Sabeel Al-Rashid">
+
+      <h2 class="h3" style="margin-bottom:18px" data-en="Personal information">المعلومات الشخصية</h2>
+      <div class="form-grid">
+        <div class="field"><label data-en="Full name">الاسم الكامل <span class="req">*</span></label><input type="text" required data-ph-en="Your full name" placeholder="اسمك الكامل"></div>
+        <div class="field"><label data-en="Date of birth">تاريخ الميلاد <span class="req">*</span></label><input type="date" dir="ltr"></div>
+        <div class="field"><label data-en="Gender">الجنس</label>
+          <select><option data-en="Male">ذكر</option><option data-en="Female">أنثى</option></select>
+        </div>
+        <div class="field"><label data-en="Marital status">الحالة الاجتماعية</label>
+          <select><option data-en="Single">أعزب</option><option data-en="Married">متزوج</option></select>
+        </div>
+        <div class="field"><label data-en="Phone">الهاتف <span class="req">*</span></label><input type="tel" required dir="ltr" data-ph-en="+964 7xx xxx xxxx" placeholder="+964 7xx xxx xxxx"></div>
+        <div class="field"><label data-en="Email">البريد الإلكتروني <span class="req">*</span></label><input type="email" required dir="ltr" data-ph-en="you@email.com" placeholder="you@email.com"></div>
+        <div class="field field--full"><label data-en="Address (governorate / district)">العنوان (المحافظة / المنطقة) <span class="req">*</span></label><input type="text" data-ph-en="e.g. Baghdad, Karrada" placeholder="مثال: بغداد، الكرادة"></div>
+      </div>
+
+      <h2 class="h3" style="margin:34px 0 18px" data-en="Position">الوظيفة</h2>
+      <div class="form-grid">
+        <div class="field"><label data-en="Position applying for">الوظيفة المتقدَّم لها <span class="req">*</span></label>
+          <select id="applyRole">
+            <option value="rgm" data-en="Restaurant General Manager">مدير مطعم عام</option>
+            <option value="chef" data-en="Production Chef">شيف إنتاج</option>
+            <option value="marketing" data-en="Marketing Specialist">أخصائي تسويق</option>
+            <option value="supply" data-en="Supply Chain Coordinator">منسّق سلسلة الإمداد</option>
+            <option value="other" data-en="Other">أخرى</option>
+          </select>
+        </div>
+        <div class="field"><label data-en="Preferred brand">العلامة المفضّلة</label>
+          <select><option data-en="Super Chicken">سوبر تشيكن</option><option data-en="Alrukn Alsharqi">الركن الشرقي</option><option data-en="Head office">المكتب الرئيسي</option><option data-en="Any">أي</option></select>
+        </div>
+        <div class="field"><label data-en="Earliest start date">أقرب تاريخ للمباشرة</label><input type="date" dir="ltr"></div>
+        <div class="field"><label data-en="Expected salary (IQD)">الراتب المتوقّع (دينار)</label><input type="text" dir="ltr" data-ph-en="Optional" placeholder="اختياري"></div>
+      </div>
+
+      <h2 class="h3" style="margin:34px 0 18px" data-en="Education & experience">التعليم والخبرة</h2>
+      <div class="form-grid">
+        <div class="field"><label data-en="Education level">التحصيل الدراسي <span class="req">*</span></label>
+          <select>
+            <option data-en="Secondary school">إعدادية</option>
+            <option data-en="Diploma">دبلوم</option>
+            <option data-en="Bachelor's">بكالوريوس</option>
+            <option data-en="Master's or higher">ماجستير فأعلى</option>
+          </select>
+        </div>
+        <div class="field"><label data-en="Years of experience">سنوات الخبرة <span class="req">*</span></label>
+          <select>
+            <option data-en="No experience">بدون خبرة</option>
+            <option data-en="1–2 years">١–٢ سنة</option>
+            <option data-en="3–5 years">٣–٥ سنوات</option>
+            <option data-en="5+ years">أكثر من ٥ سنوات</option>
+          </select>
+        </div>
+        <div class="field field--full"><label data-en="Most recent employer & role">آخر جهة عمل والمسمّى الوظيفي</label><input type="text" data-ph-en="Company — role" placeholder="الشركة — المسمّى"></div>
+        <div class="field field--full"><label data-en="Upload CV">رفع السيرة الذاتية <span class="req">*</span></label>
+          <label class="file-drop" data-en="Click to upload — PDF or DOCX, max 5MB">اضغط للرفع — PDF أو DOCX، بحد أقصى ٥ ميجابايت<input type="file" accept=".pdf,.doc,.docx" hidden></label>
+        </div>
+        <div class="field field--full"><label data-en="Why are you a great fit?">لماذا أنت الأنسب؟</label><textarea data-ph-en="A short note about yourself…" placeholder="ملاحظة قصيرة عن نفسك…"></textarea></div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px">
+        <p class="form__note" style="margin:0" data-en="Submitting opens your email app with the application ready to send.">عند الإرسال سيُفتح تطبيق بريدك الإلكتروني مع الطلب جاهزاً للإرسال.</p>
+        <button class="btn btn--gold" type="submit" data-en="Submit application">إرسال الطلب <span class="arrow">←</span></button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>
+// preselect role from ?role= param
+(function(){
+  var role = new URLSearchParams(location.search).get("role");
+  if(!role) return;
+  document.addEventListener("DOMContentLoaded", function(){
+    var sel = document.getElementById("applyRole");
+    if(sel && sel.querySelector('option[value="'+role+'"]')) sel.value = role;
+  });
+})();
+</script>
+</body>
+</html>

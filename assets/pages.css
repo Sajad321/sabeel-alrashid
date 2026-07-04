@@ -182,3 +182,74 @@ html[dir="rtl"] .statline > div{border-inline-start:none;border-inline-end:2px s
 @media (max-width:560px){
   .team-grid,.gallery{grid-template-columns:1fr 1fr}
 }
+
+
+/* ===================== website 3 revision ===================== */
+
+/* animated photo layer in page heroes (Ken Burns) */
+.page-hero{isolation:isolate}
+.page-hero__media{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.page-hero__media img{width:100%;height:100%;object-fit:cover;display:block;animation:heroKen 18s ease-in-out infinite alternate}
+.page-hero__media::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,18,16,.82),rgba(20,18,16,.55))}
+@keyframes heroKen{from{transform:scale(1) translateX(0)}to{transform:scale(1.12) translateX(2%)}}
+@media (prefers-reduced-motion:reduce){.page-hero__media img{animation:none}}
+
+/* animated vision / mission icons */
+.vm-ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;background:rgba(177,127,72,.1);border:1px solid rgba(177,127,72,.25);margin-bottom:18px;animation:vmFloat 3.6s ease-in-out infinite}
+.vm-card:nth-child(2) .vm-ic{animation-delay:1.2s}
+.vm-ic svg{width:32px;height:32px;fill:none;stroke:var(--bronze);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.vm-ic--vision svg .pupil{animation:vmPulse 3.6s ease-in-out infinite}
+.vm-ic--mission svg .ring{transform-origin:center;animation:vmSpin 9s linear infinite}
+@keyframes vmFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes vmPulse{0%,100%{transform:scale(1)}50%{transform:scale(.8)}}
+@keyframes vmSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.vm-ic,.vm-ic svg *{animation:none !important}}
+
+/* gold hover border on cards */
+.feature{transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .25s var(--ease)}
+.feature:hover{border-color:var(--gold) !important;box-shadow:0 0 0 3px rgba(177,127,72,.14),var(--shadow-md);transform:translateY(-3px)}
+.invest-tile{background:#fff;border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:clamp(24px,3vw,36px);text-align:center;transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .25s var(--ease)}
+.invest-tile:hover{border-color:var(--gold);box-shadow:0 0 0 3px rgba(177,127,72,.14),var(--shadow-md);transform:translateY(-3px)}
+.invest-tile .n{font-family:var(--ff-en);font-weight:800;font-size:clamp(1.9rem,3.2vw,2.7rem);line-height:1;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:block}
+html[lang="ar"] .invest-tile .n{font-family:var(--ff-ar)}
+.invest-tile .l{display:block;margin-top:.55em;font-weight:700;color:var(--charcoal)}
+.invest-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,22px);margin-top:30px}
+@media (max-width:760px){.invest-tiles{grid-template-columns:1fr}}
+
+/* brand page: circular logo aside + moving equal-image strip */
+.brand-sidelogo{display:grid;place-items:center}
+.brand-sidelogo .disc{width:clamp(220px,26vw,320px);aspect-ratio:1;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-lg);display:grid;place-items:center;overflow:hidden}
+.brand-sidelogo .disc img{width:78%;height:78%;object-fit:contain}
+.bstrip{overflow:hidden;margin-top:28px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.bstrip__row{display:flex;gap:16px;width:max-content;animation:bstripMove 30s linear infinite}
+.bstrip:hover .bstrip__row{animation-play-state:paused}
+html[dir="rtl"] .bstrip__row{animation-direction:reverse}
+.bstrip__row img{width:clamp(220px,24vw,300px);height:clamp(160px,17vw,210px);object-fit:cover;border-radius:var(--radius);display:block;box-shadow:var(--shadow-sm)}
+@keyframes bstripMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.bstrip__row{animation:none}}
+.btn--visit{background:var(--gold-grad);color:#fff;border:none;box-shadow:0 10px 22px -10px rgba(151,81,36,.55)}
+.btn--visit:hover{transform:translateY(-2px);box-shadow:0 14px 26px -10px rgba(151,81,36,.65)}
+
+/* news page: filter bar + card grid + article page */
+.newsbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:30px}
+.newsbar select{font-family:inherit;font-size:.92rem;font-weight:700;color:var(--charcoal);background:#fff;border:1px solid var(--line);border-radius:40px;padding:.55em 1.1em;cursor:pointer}
+.newsbar select:focus{outline:none;border-color:var(--gold)}
+.newsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,26px)}
+.ncard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .25s var(--ease),transform .25s var(--ease),border-color .25s}
+.ncard:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);border-color:var(--gold)}
+.ncard__media{aspect-ratio:16/10;overflow:hidden}
+.ncard__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--ease)}
+.ncard:hover .ncard__media img{transform:scale(1.05)}
+.ncard__body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.ncard__body h3{font-size:1.08rem;line-height:1.5;color:var(--ink-900);margin:0;flex:1}
+.ncard__date{font-size:.85rem;color:var(--muted);font-weight:600}
+@media (max-width:900px){.newsgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.newsgrid{grid-template-columns:1fr}}
+
+/* news article detail */
+.article{max-width:860px;margin-inline:auto}
+.article__meta{display:flex;align-items:center;gap:14px;color:var(--muted);font-weight:600;font-size:.92rem;margin-bottom:1rem}
+.article__hero{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);margin:26px 0 34px}
+.article__hero img{width:100%;display:block}
+.article__body p{font-size:1.08rem;line-height:1.95;color:var(--charcoal);margin:0 0 1.3em}
+.article__back{margin-top:38px}

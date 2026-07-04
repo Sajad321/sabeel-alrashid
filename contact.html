@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/pages.css">
-<link rel="stylesheet" href="assets/baghdad-map.css">
 </head>
 <body>
 <div id="site-header"></div>
 
-<section class="page-hero page-hero--plum" data-screen-label="Contact / Banner">
+<section class="page-hero" data-screen-label="Contact / Banner">
+  <div class="page-hero__media"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1900&q=75&auto=format&fit=crop" alt=""></div>
   <div class="container page-hero__inner">
     <nav class="breadcrumb">
       <a href="index.html" data-en="Home">الرئيسية</a><span class="sep">/</span>
@@ -80,21 +80,7 @@
   </div>
 </section>
 
-<!-- interactive Iraq branches map -->
-<section class="section section--branches" id="branches" data-screen-label="Contact / Branches map">
-  <div class="container">
-    <div class="branches-head reveal">
-      <div>
-        <h2 class="h2" data-en="Branches in Baghdad">فروعنا في بغداد</h2>
-      </div>
-      <p class="lead" style="max-width:44ch;margin:0" data-en="Tap any pin to see the branch with its coordinates and directions. More governorates coming soon.">اضغط على أي علامة لعرض الفرع مع إحداثياته والاتجاهات إليه. محافظاتٌ أخرى قريباً.</p>
-    </div>
-    <div id="baghdad-map" class="reveal" data-d="1"></div>
-  </div>
-</section>
-
 <div id="site-footer"></div>
-<script src="assets/baghdad-map.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

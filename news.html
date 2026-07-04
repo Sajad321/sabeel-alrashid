@@ -13,129 +13,124 @@
 <body>
 <div id="site-header"></div>
 
-<section class="page-hero page-hero--blue" data-screen-label="News / Banner">
+<section class="page-hero" data-screen-label="News / Banner">
+  <div class="page-hero__media"><img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1900&q=75&auto=format&fit=crop" alt=""></div>
   <div class="container page-hero__inner">
     <nav class="breadcrumb">
       <a href="index.html" data-en="Home">الرئيسية</a><span class="sep">/</span>
       <span data-en="News & Media">الأخبار والإعلام</span>
     </nav>
-    <h1 class="h1" data-en="News, press & media">الأخبار والصحافة والإعلام</h1>
-    <p data-en="The latest from across the Sabeel Al-Rashid group — expansion, partnerships, press coverage and events.">آخر ما لدى مجموعة سبيل الراشد — التوسّع والشراكات والتغطية الصحفية والفعاليات.</p>
+    <h1 class="h1" data-en="News & media">الأخبار والإعلام</h1>
+    <p data-en="The latest from across the Sabeel Al-Rashid group.">آخر ما لدى مجموعة سبيل الراشد.</p>
   </div>
 </section>
 
-<!-- news grid -->
 <section class="section">
   <div class="container">
-    <div class="filters reveal" data-filter-group>
-      <button class="filter is-active" data-cat="all" data-en="All">الكل</button>
-      <button class="filter" data-cat="expansion" data-en="Expansion">توسّع</button>
-      <button class="filter" data-cat="investment" data-en="Investment">استثمار</button>
-      <button class="filter" data-cat="partnership" data-en="Partnership">شراكات</button>
-      <button class="filter" data-cat="brand" data-en="Brands">العلامات</button>
+    <div class="newsbar reveal">
+      <select id="yearFilter" aria-label="Year">
+        <option value="all" data-en="All years">كل السنوات</option>
+        <option value="2026">2026</option>
+        <option value="2025">2025</option>
+      </select>
+      <select id="sortOrder" aria-label="Sort">
+        <option value="new" data-en="Newest first">الأحدث أولاً</option>
+        <option value="old" data-en="Oldest first">الأقدم أولاً</option>
+      </select>
     </div>
-    <div class="news-list">
-      <a class="news-card reveal" data-cat-item="expansion" href="#">
-        <div class="ph news-card__media" data-label="صورة الخبر" data-label-en="ARTICLE IMAGE"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Ken07.webp" alt="" loading="lazy"></div>
-        <div class="news-card__body">
-          <span class="news-card__meta"><span class="chip" data-en="Expansion">توسّع</span> · <time data-en="May 2026">مايو ٢٠٢٦</time></span>
-          <h3 class="h3" data-en="Super Chicken opens its 32nd branch">سوبر تشيكن يفتتح فرعه الثاني والثلاثين</h3>
+    <div class="newsgrid" id="newsGrid">
+      <a class="ncard reveal" data-year="2026" data-date="2026-05-14" href="news-article.html">
+        <div class="ncard__media"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Ken07.webp" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Super Chicken opens its 32nd branch">سوبر تشيكن يفتتح فرعه الثاني والثلاثين</h3>
+          <span class="ncard__date" data-en="14 May 2026">١٤ مايو ٢٠٢٦</span>
         </div>
       </a>
-      <a class="news-card reveal" data-d="1" data-cat-item="investment" href="#">
-        <div class="ph ph--dark news-card__media" data-label="صورة الخبر" data-label-en="ARTICLE IMAGE"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-        <div class="news-card__body">
-          <span class="news-card__meta"><span class="chip" data-en="Investment">استثمار</span> · <time data-en="Apr 2026">أبريل ٢٠٢٦</time></span>
-          <h3 class="h3" data-en="New central kitchen boosts production capacity">مطبخٌ مركزيّ جديد يرفع الطاقة الإنتاجية</h3>
+      <a class="ncard reveal" data-year="2026" data-date="2026-04-02" href="news-article.html">
+        <div class="ncard__media"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="New central kitchen boosts production capacity">مطبخٌ مركزيّ جديد يرفع الطاقة الإنتاجية</h3>
+          <span class="ncard__date" data-en="2 Apr 2026">٢ أبريل ٢٠٢٦</span>
         </div>
       </a>
-      <a class="news-card reveal" data-d="2" data-cat-item="partnership" href="#">
-        <div class="ph news-card__media" data-label="صورة الخبر" data-label-en="ARTICLE IMAGE"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-        <div class="news-card__body">
-          <span class="news-card__meta"><span class="chip" data-en="Partnership">شراكة</span> · <time data-en="Mar 2026">مارس ٢٠٢٦</time></span>
-          <h3 class="h3" data-en="Sabeel Al-Rashid signs regional franchise deal">سبيل الراشد توقّع اتفاقية امتياز إقليمية</h3>
+      <a class="ncard reveal" data-year="2026" data-date="2026-03-18" href="news-article.html">
+        <div class="ncard__media"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Sabeel Al-Rashid signs regional franchise deal">سبيل الراشد توقّع اتفاقية امتياز إقليمية</h3>
+          <span class="ncard__date" data-en="18 Mar 2026">١٨ مارس ٢٠٢٦</span>
         </div>
       </a>
-      <a class="news-card reveal" data-cat-item="brand" href="#">
-        <div class="ph ph--dark news-card__media" data-label="صورة الخبر" data-label-en="ARTICLE IMAGE"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-        <div class="news-card__body">
-          <span class="news-card__meta"><span class="chip" data-en="Brands">علامة</span> · <time data-en="Feb 2026">فبراير ٢٠٢٦</time></span>
-          <h3 class="h3" data-en="Alrukn Alsharqi unveils a refreshed menu">الركن الشرقي يكشف عن قائمةٍ مُجدّدة</h3>
+      <a class="ncard reveal" data-year="2026" data-date="2026-02-06" href="news-article.html">
+        <div class="ncard__media"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Alrukn Alsharqi unveils a refreshed menu">الركن الشرقي يكشف عن قائمةٍ مُجدّدة</h3>
+          <span class="ncard__date" data-en="6 Feb 2026">٦ فبراير ٢٠٢٦</span>
         </div>
       </a>
-      <a class="news-card reveal" data-d="1" data-cat-item="expansion" href="#">
-        <div class="ph news-card__media" data-label="صورة الخبر" data-label-en="ARTICLE IMAGE"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Bucket-1-scaled.webp" alt="" loading="lazy"></div>
-        <div class="news-card__body">
-          <span class="news-card__meta"><span class="chip" data-en="Expansion">توسّع</span> · <time data-en="Jan 2026">يناير ٢٠٢٦</time></span>
-          <h3 class="h3" data-en="Group crosses 45 branches across the region">المجموعة تتجاوز ٤٥ فرعاً في المنطقة</h3>
+      <a class="ncard reveal" data-year="2026" data-date="2026-01-20" href="news-article.html">
+        <div class="ncard__media"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Bucket-1-scaled.webp" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Group crosses 45 branches across the region">المجموعة تتجاوز ٤٥ فرعاً في المنطقة</h3>
+          <span class="ncard__date" data-en="20 Jan 2026">٢٠ يناير ٢٠٢٦</span>
         </div>
       </a>
-      <a class="news-card reveal" data-d="2" data-cat-item="investment" href="#">
-        <div class="ph ph--dark news-card__media" data-label="صورة الخبر" data-label-en="ARTICLE IMAGE"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-        <div class="news-card__body">
-          <span class="news-card__meta"><span class="chip" data-en="Investment">استثمار</span> · <time data-en="Dec 2025">ديسمبر ٢٠٢٥</time></span>
-          <h3 class="h3" data-en="Packaging division expands B2B supply">قطاع التعبئة يوسّع الإمداد للأعمال</h3>
+      <a class="ncard reveal" data-year="2025" data-date="2025-12-09" href="news-article.html">
+        <div class="ncard__media"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Packaging division expands B2B supply">قطاع التعبئة يوسّع الإمداد للأعمال</h3>
+          <span class="ncard__date" data-en="9 Dec 2025">٩ ديسمبر ٢٠٢٥</span>
         </div>
       </a>
-    </div>
-  </div>
-</section>
-
-<!-- press releases -->
-<section class="section section--panel">
-  <div class="container">
-    <div class="section-head reveal" style="margin-bottom:28px">
-      <h2 class="h2" data-en="Press releases">البيانات الصحفية</h2>
-    </div>
-    <div class="press reveal" data-d="1">
-      <a class="press-item" href="#"><time>2026 / 05</time><h3 data-en="Sabeel Al-Rashid announces regional expansion plan">سبيل الراشد تعلن خطة التوسّع الإقليمي</h3><span class="go" data-en="Read →">اقرأ ←</span></a>
-      <a class="press-item" href="#"><time>2026 / 03</time><h3 data-en="Group signs strategic supplier partnership">المجموعة توقّع شراكة موردين استراتيجية</h3><span class="go" data-en="Read →">اقرأ ←</span></a>
-      <a class="press-item" href="#"><time>2026 / 01</time><h3 data-en="Annual results: a year of disciplined growth">النتائج السنوية: عامٌ من النمو المنضبط</h3><span class="go" data-en="Read →">اقرأ ←</span></a>
-      <a class="press-item" href="#"><time>2025 / 11</time><h3 data-en="New central kitchen receives food-safety certification">المطبخ المركزي الجديد يحصل على شهادة سلامة الغذاء</h3><span class="go" data-en="Read →">اقرأ ←</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- events -->
-<section class="section">
-  <div class="container">
-    <div class="section-head reveal" style="margin-bottom:32px">
-      <h2 class="h2" data-en="Upcoming events">الفعاليات القادمة</h2>
-    </div>
-    <div class="grid cols-2">
-      <div class="event reveal">
-        <div class="event__date"><div class="d">18</div><div class="m" data-en="JUN">يونيو</div></div>
-        <div><h3 data-en="Franchise & Investment Forum">منتدى الامتياز والاستثمار</h3><p data-en="Baghdad · Meet our team and explore opportunities.">بغداد · قابل فريقنا واستكشف الفرص.</p></div>
-      </div>
-      <div class="event reveal" data-d="1">
-        <div class="event__date"><div class="d">04</div><div class="m" data-en="SEP">سبتمبر</div></div>
-        <div><h3 data-en="Regional Food & Hospitality Expo">معرض الأغذية والضيافة الإقليمي</h3><p data-en="Basra · Visit the Sabeel Al-Rashid stand.">البصرة · زُر جناح سبيل الراشد.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- media gallery -->
-<section class="section section--panel">
-  <div class="container">
-    <div class="section-head reveal" style="margin-bottom:28px">
-      <h2 class="h2" data-en="Media gallery">معرض الوسائط</h2>
-    </div>
-    <div class="gallery reveal" data-d="1">
-      <div class="ph span2" data-label="صورة إعلامية" data-label-en="MEDIA"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-      <div class="ph" data-label="صورة" data-label-en="PHOTO"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Ken01.webp" alt="" loading="lazy"></div>
-      <div class="ph ph--dark" data-label="صورة" data-label-en="PHOTO"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-      <div class="ph ph--dark" data-label="صورة" data-label-en="PHOTO"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-      <div class="ph" data-label="صورة" data-label-en="PHOTO"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Rice-002.webp" alt="" loading="lazy"></div>
-      <div class="ph span2" data-label="صورة إعلامية" data-label-en="MEDIA"><img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1100&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
-    </div>
-    <div style="text-align:center;margin-top:32px" class="reveal">
-      <a class="btn btn--outline" href="contact.html" data-en="Media enquiries">استفسارات إعلامية <span class="arrow">←</span></a>
+      <a class="ncard reveal" data-year="2025" data-date="2025-10-27" href="news-article.html">
+        <div class="ncard__media"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Alrukn Alsharqi opens its new Zayouna dining hall">الركن الشرقي يفتتح صالته الجديدة في زيونة</h3>
+          <span class="ncard__date" data-en="27 Oct 2025">٢٧ أكتوبر ٢٠٢٥</span>
+        </div>
+      </a>
+      <a class="ncard reveal" data-year="2025" data-date="2025-08-15" href="news-article.html">
+        <div class="ncard__media"><img src="https://www.superchicken-iq.com/wp-content/uploads/2025/04/Rice-001.webp" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Super Chicken launches its new rice menu">إطلاق قائمة الأرز الجديدة في سوبر تشيكن</h3>
+          <span class="ncard__date" data-en="15 Aug 2025">١٥ أغسطس ٢٠٢٥</span>
+        </div>
+      </a>
+      <a class="ncard reveal" data-year="2025" data-date="2025-06-30" href="news-article.html">
+        <div class="ncard__media"><img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=900&q=75&auto=format&fit=crop" alt="" loading="lazy"></div>
+        <div class="ncard__body">
+          <h3 data-en="Central kitchen receives food-safety certification">المطبخ المركزي يحصل على شهادة سلامة الغذاء</h3>
+          <span class="ncard__date" data-en="30 Jun 2025">٣٠ يونيو ٢٠٢٥</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
 <div id="site-footer"></div>
 <script src="assets/site.js"></script>
+<script>
+(function(){
+  function boot(){
+    var grid=document.getElementById("newsGrid");
+    var year=document.getElementById("yearFilter");
+    var sort=document.getElementById("sortOrder");
+    if(!grid) return;
+    var cards=Array.prototype.slice.call(grid.children);
+    function apply(){
+      var y=year.value, s=sort.value;
+      var vis=cards.filter(function(c){return y==="all"||c.getAttribute("data-year")===y;});
+      vis.sort(function(a,b){
+        var da=a.getAttribute("data-date"), db=b.getAttribute("data-date");
+        return s==="new" ? db.localeCompare(da) : da.localeCompare(db);
+      });
+      cards.forEach(function(c){c.remove();});
+      vis.forEach(function(c){grid.appendChild(c);});
+    }
+    year.addEventListener("change",apply);
+    sort.addEventListener("change",apply);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
+})();
+</script>
 </body>
 </html>

@@ -13,7 +13,8 @@
 <body>
 <div id="site-header"></div>
 
-<section class="page-hero page-hero--green" data-screen-label="Careers / Banner">
+<section class="page-hero" data-screen-label="Careers / Banner">
+  <div class="page-hero__media"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1900&q=75&auto=format&fit=crop" alt=""></div>
   <div class="container page-hero__inner">
     <nav class="breadcrumb">
       <a href="index.html" data-en="Home">الرئيسية</a><span class="sep">/</span>
@@ -72,7 +73,7 @@
         </button>
         <div class="position__body"><div class="position__body-inner">
           <p data-en="Lead a branch end-to-end — team, quality, guest experience and P&L. 3+ years of restaurant management experience required.">قُد فرعاً بالكامل — الفريق والجودة وتجربة الضيف والأرباح. مطلوب خبرة ٣ سنوات فأكثر في إدارة المطاعم.</p>
-          <a class="btn btn--ink" href="#apply" data-apply-role="Restaurant General Manager" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
+          <a class="btn btn--ink" href="apply.html?role=rgm" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
         </div></div>
       </div>
       <div class="position">
@@ -83,7 +84,7 @@
         </button>
         <div class="position__body"><div class="position__body-inner">
           <p data-en="Prepare and standardise recipes at scale while upholding strict food-safety standards in our central production facility.">حضّر ووحّد الوصفات على نطاق واسع مع الالتزام بمعايير سلامة الغذاء الصارمة في منشأة الإنتاج المركزية.</p>
-          <a class="btn btn--ink" href="#apply" data-apply-role="Production Chef" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
+          <a class="btn btn--ink" href="apply.html?role=chef" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
         </div></div>
       </div>
       <div class="position">
@@ -94,7 +95,7 @@
         </button>
         <div class="position__body"><div class="position__body-inner">
           <p data-en="Plan and run brand campaigns across social, delivery platforms and in-store — turning insights into growth.">خطّط ونفّذ حملات العلامات عبر التواصل الاجتماعي ومنصّات التوصيل وداخل الفروع — لتحويل الرؤى إلى نمو.</p>
-          <a class="btn btn--ink" href="#apply" data-apply-role="Marketing Specialist" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
+          <a class="btn btn--ink" href="apply.html?role=marketing" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
         </div></div>
       </div>
       <div class="position">
@@ -105,44 +106,21 @@
         </button>
         <div class="position__body"><div class="position__body-inner">
           <p data-en="Coordinate sourcing, inventory and distribution to keep every branch reliably supplied.">نسّق التوريد والمخزون والتوزيع لإبقاء كل فرعٍ مزوّداً بموثوقية.</p>
-          <a class="btn btn--ink" href="#apply" data-apply-role="Supply Chain Coordinator" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
+          <a class="btn btn--ink" href="apply.html?role=supply" data-en="Apply for this role">قدّم على هذه الوظيفة <span class="arrow">←</span></a>
         </div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- application form -->
+<!-- apply CTA -->
 <section class="section section--panel" id="apply">
-  <div class="container" style="max-width:920px">
-    <div class="section-head section-head--center reveal" style="margin-bottom:36px">
-      <h2 class="h2" data-en="Apply now">قدّم الآن</h2>
-      <p class="lead" data-en="Send us your details and CV — we review every application.">أرسل بياناتك وسيرتك الذاتية — نراجع كل طلب.</p>
+  <div class="container" style="max-width:820px;text-align:center">
+    <div class="reveal">
+      <h2 class="h2" data-en="Ready to join us?">جاهزٌ للانضمام إلينا؟</h2>
+      <p class="lead" style="margin:.7rem auto 1.8rem;max-width:46ch" data-en="The application takes a few minutes — tell us about yourself and attach your CV. We review every application.">التقديم يستغرق دقائق قليلة — حدّثنا عن نفسك وأرفق سيرتك الذاتية. نراجع كل طلب.</p>
+      <a class="btn btn--gold" href="apply.html" style="font-size:1.05rem;padding:.85em 2em" data-en="Apply now">قدّم الآن <span class="arrow">←</span></a>
     </div>
-    <form class="form reveal" data-d="1" data-mailto="careers@sabeelalrashid.com" data-subject="Job Application — Sabeel Al-Rashid">
-      <div class="form-grid">
-        <div class="field"><label data-en="Full name">الاسم الكامل <span class="req">*</span></label><input type="text" data-ph-en="Your full name" placeholder="اسمك الكامل"></div>
-        <div class="field"><label data-en="Email">البريد الإلكتروني <span class="req">*</span></label><input type="email" dir="ltr" data-ph-en="you@email.com" placeholder="you@email.com"></div>
-        <div class="field"><label data-en="Phone">الهاتف</label><input type="tel" dir="ltr" data-ph-en="+964 7xx xxx xxxx" placeholder="+964 7xx xxx xxxx"></div>
-        <div class="field"><label data-en="Position">الوظيفة <span class="req">*</span></label>
-          <select id="applyRole">
-            <option data-en="Restaurant General Manager">مدير مطعم عام</option>
-            <option data-en="Production Chef">شيف إنتاج</option>
-            <option data-en="Marketing Specialist">أخصائي تسويق</option>
-            <option data-en="Supply Chain Coordinator">منسّق سلسلة الإمداد</option>
-            <option data-en="Other">أخرى</option>
-          </select>
-        </div>
-        <div class="field field--full"><label data-en="Upload CV">رفع السيرة الذاتية <span class="req">*</span></label>
-          <label class="file-drop" data-en="Click to upload — PDF or DOCX, max 5MB">اضغط للرفع — PDF أو DOCX، بحد أقصى ٥ ميجابايت<input type="file" accept=".pdf,.doc,.docx" hidden></label>
-        </div>
-        <div class="field field--full"><label data-en="Message">رسالتك</label><textarea data-ph-en="A short note about why you'd be a great fit…" placeholder="ملاحظة قصيرة عن سبب كونك إضافةً رائعة…"></textarea></div>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px">
-        <p class="form__note" style="margin:0" data-en="Submitting opens your email app with the application ready to send.">عند الإرسال سيُفتح تطبيق بريدك الإلكتروني مع الطلب جاهزاً للإرسال.</p>
-        <button class="btn btn--gold" type="submit" data-en="Submit application">إرسال الطلب <span class="arrow">←</span></button>
-      </div>
-    </form>
   </div>
 </section>
 
