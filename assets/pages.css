@@ -220,10 +220,10 @@ html[lang="ar"] .invest-tile .n{font-family:var(--ff-ar)}
 .brand-sidelogo{display:grid;place-items:center}
 .brand-sidelogo .disc{width:clamp(220px,26vw,320px);aspect-ratio:1;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-lg);display:grid;place-items:center;overflow:hidden}
 .brand-sidelogo .disc img{width:78%;height:78%;object-fit:contain}
-.bstrip{overflow:hidden;margin-top:28px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.bstrip{overflow:hidden;margin-top:28px;direction:ltr;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .bstrip__row{display:flex;gap:16px;width:max-content;animation:bstripMove 30s linear infinite}
 .bstrip:hover .bstrip__row{animation-play-state:paused}
-html[dir="rtl"] .bstrip__row{animation-direction:reverse}
+html[dir="rtl"] .bstrip__row{animation-direction:normal}
 .bstrip__row img{width:clamp(220px,24vw,300px);height:clamp(160px,17vw,210px);object-fit:cover;border-radius:var(--radius);display:block;box-shadow:var(--shadow-sm)}
 @keyframes bstripMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.bstrip__row{animation:none}}
@@ -253,3 +253,32 @@ html[dir="rtl"] .bstrip__row{animation-direction:reverse}
 .article__hero img{width:100%;display:block}
 .article__body p{font-size:1.08rem;line-height:1.95;color:var(--charcoal);margin:0 0 1.3em}
 .article__back{margin-top:38px}
+
+
+/* animated feature icons (franchise "partnership" cards) */
+.feature__ic{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;background:rgba(177,127,72,.1);border:1px solid rgba(177,127,72,.25);margin-bottom:16px;animation:featFloat 4s ease-in-out infinite}
+.feature:nth-child(2) .feature__ic{animation-delay:.5s}
+.feature:nth-child(3) .feature__ic{animation-delay:1s}
+.feature:nth-child(4) .feature__ic{animation-delay:1.5s}
+.feature:nth-child(5) .feature__ic{animation-delay:2s}
+.feature:nth-child(6) .feature__ic{animation-delay:2.5s}
+.feature__ic svg{width:30px;height:30px;fill:none;stroke:var(--bronze);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@keyframes featFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* per-icon micro-motions */
+.fi-badge .star{transform-origin:center;animation:fiPulse 3s ease-in-out infinite}
+.fi-supply .box{animation:fiSlide 2.6s ease-in-out infinite}
+.fi-support .gear{transform-origin:center;animation:fiSpin 8s linear infinite}
+.fi-econ .b1{animation:fiBar 2.4s ease-in-out infinite}
+.fi-econ .b2{animation:fiBar 2.4s ease-in-out infinite .3s}
+.fi-econ .b3{animation:fiBar 2.4s ease-in-out infinite .6s}
+.fi-quality .chk{stroke-dasharray:16;stroke-dashoffset:16;animation:fiDraw 2.8s ease-in-out infinite}
+.fi-growth .arr{animation:fiUp 2.2s ease-in-out infinite}
+@keyframes fiPulse{0%,100%{transform:scale(1)}50%{transform:scale(.82)}}
+@keyframes fiSlide{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+html[dir="rtl"] .fi-supply .box{animation:fiSlideR 2.6s ease-in-out infinite}
+@keyframes fiSlideR{0%,100%{transform:translateX(0)}50%{transform:translateX(-3px)}}
+@keyframes fiSpin{to{transform:rotate(360deg)}}
+@keyframes fiBar{0%,100%{transform:scaleY(.55);transform-origin:bottom}50%{transform:scaleY(1);transform-origin:bottom}}
+@keyframes fiDraw{0%{stroke-dashoffset:16}45%,100%{stroke-dashoffset:0}}
+@keyframes fiUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.feature__ic,.feature__ic svg *{animation:none !important;stroke-dashoffset:0 !important}}
