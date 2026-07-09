@@ -282,3 +282,14 @@ html[dir="rtl"] .fi-supply .box{animation:fiSlideR 2.6s ease-in-out infinite}
 @keyframes fiDraw{0%{stroke-dashoffset:16}45%,100%{stroke-dashoffset:0}}
 @keyframes fiUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.feature__ic,.feature__ic svg *{animation:none !important;stroke-dashoffset:0 !important}}
+
+
+/* careers benefit icons — bigger + animated */
+.feature__ic--lg{width:72px;height:72px;border-radius:18px}
+.feature__ic--lg svg{width:36px;height:36px}
+.fi-pay .coin{transform-origin:center;animation:fiCoin 2.8s ease-in-out infinite}
+.fi-health .cross{transform-origin:center;animation:fiPulse 2.4s ease-in-out infinite}
+.fi-meals .steam{stroke-dasharray:5;animation:fiSteam 2.4s ease-in-out infinite}
+.fi-clock .hand{transform-origin:12px 12px;animation:fiSpin 6s linear infinite}
+@keyframes fiCoin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.35)}}
+@keyframes fiSteam{0%{stroke-dashoffset:0;opacity:.4}50%{opacity:1}100%{stroke-dashoffset:-10;opacity:.4}}

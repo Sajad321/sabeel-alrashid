@@ -48,8 +48,9 @@
 
     var pinWrap=host.querySelector("#bmap-pins");
     BR.forEach(function(b,i){
-      var p=document.createElement("button");
-      p.type="button"; p.className="gpin gpin--"+b.brand.cls; p.setAttribute("data-i",i);
+      var p=document.createElement("a");
+      p.className="gpin gpin--"+b.brand.cls; p.setAttribute("data-i",i);
+      p.href=mapsDir(b); p.target="_blank"; p.rel="noopener";
       p.style.left=b.xPct+"%"; p.style.top=b.yPct+"%";
       p.innerHTML='<span class="gpin__num"><img src="'+b.brand.logo+'" alt=""></span>';
       p.addEventListener("click",function(){ setActive(i,true); });
