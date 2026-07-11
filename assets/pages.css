@@ -217,14 +217,16 @@ html[lang="ar"] .invest-tile .n{font-family:var(--ff-ar)}
 @media (max-width:760px){.invest-tiles{grid-template-columns:1fr}}
 
 /* brand page: circular logo aside + moving equal-image strip */
+.brandcard{position:relative;background:#fff;border:1.5px solid #e0a95c;border-radius:var(--radius-lg);padding:clamp(20px,2.6vw,34px);box-shadow:var(--shadow-md)}
+.brandcard>*{position:relative}
 .brand-sidelogo{display:grid;place-items:center}
 .brand-sidelogo .disc{width:clamp(220px,26vw,320px);aspect-ratio:1;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-lg);display:grid;place-items:center;overflow:hidden}
 .brand-sidelogo .disc img{width:78%;height:78%;object-fit:contain}
-.bstrip{overflow:hidden;margin-top:28px;direction:ltr;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.bstrip{margin-top:26px;border:1.5px solid #e0a95c;border-radius:var(--radius-lg);padding:clamp(12px,1.4vw,18px);overflow:hidden;direction:ltr}
 .bstrip__row{display:flex;gap:16px;width:max-content;animation:bstripMove 30s linear infinite}
 .bstrip:hover .bstrip__row{animation-play-state:paused}
 html[dir="rtl"] .bstrip__row{animation-direction:normal}
-.bstrip__row img{width:clamp(220px,24vw,300px);height:clamp(160px,17vw,210px);object-fit:cover;border-radius:var(--radius);display:block;box-shadow:var(--shadow-sm)}
+.bstrip__row img{width:clamp(220px,24vw,300px);height:clamp(160px,17vw,210px);object-fit:cover;border-radius:14px;display:block;border:1px solid var(--line);background:#fff;padding:5px;box-shadow:none}
 @keyframes bstripMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.bstrip__row{animation:none}}
 .btn--visit{background:var(--gold-grad);color:#fff;border:none;box-shadow:0 10px 22px -10px rgba(151,81,36,.55)}

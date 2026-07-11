@@ -74,9 +74,18 @@ html[dir="rtl"] .carousel__arrow span{display:inline-block;transform:scaleX(-1)}
 /* ---- stat band with icons (changeable PNGs) ---- */
 .statband .stat{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
 .stat__ic{width:74px;height:74px;border-radius:20px;display:grid;place-items:center;background:rgba(40,40,46,.05);border:1px solid rgba(40,40,46,.1);transition:transform .35s var(--ease),background .35s,box-shadow .35s}
-.stat__ic img{width:42px;height:42px;object-fit:contain;display:block;transition:transform .35s var(--ease)}
-.statband .stat:hover .stat__ic{transform:translateY(-6px);background:rgba(40,40,46,.08);box-shadow:0 12px 24px -12px rgba(20,22,28,.4)}
-.statband .stat:hover .stat__ic img{transform:scale(1.12) rotate(-4deg)}
+.stat__ic svg{width:38px;height:38px;fill:none;stroke:var(--bronze);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.statband .stat:hover .stat__ic{transform:translateY(-6px);background:rgba(177,127,72,.1);box-shadow:0 12px 24px -12px rgba(151,81,36,.4)}
+.st-brands .roof{transform-origin:center;animation:fiPulse 3s ease-in-out infinite}
+.st-branches .pin{animation:fiUp 2.4s ease-in-out infinite}
+.st-div .layer{animation:fiBar 2.6s ease-in-out infinite;transform-origin:center}
+.st-div .layer:nth-child(2){animation-delay:.3s}
+.st-div .layer:nth-child(3){animation-delay:.6s}
+.st-team .head{transform-origin:center;animation:fiPulse 2.8s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.stat__ic svg *{animation:none !important}}
+@keyframes fiPulse{0%,100%{transform:scale(1)}50%{transform:scale(.82)}}
+@keyframes fiUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes fiBar{0%,100%{transform:scaleY(.6)}50%{transform:scaleY(1)}}
 
 /* ---- branches map section ---- */
 .section--branches{background:var(--paper)}
