@@ -1,0 +1,12 @@
+.next/
+node_modules/
+.env
+.env.local
+.vercel/
+coverage/
+test-results/
+playwright-report/
+sanity-typegen.json
+schema.json
+*.tsbuildinfo
+.DS_Store
