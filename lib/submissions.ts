@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import type { NextRequest } from "next/server";
 import { sanityWriteClient } from "./sanity/client";
 import { notificationTransport } from "./notifications";
+import { getSiteSettings } from "./sanity/data";
 
 export function requestKey(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "local";
@@ -42,6 +43,7 @@ export async function createSubmission(
   });
   if (notificationTransport) {
     try {
+      const settings = await getSiteSettings();
       await notificationTransport.send({
         type:
           type === "contactSubmission"
@@ -52,6 +54,12 @@ export async function createSubmission(
         submissionId: document._id,
         subject,
         summary: String(data.email || ""),
+        recipient:
+          type === "franchiseSubmission"
+            ? settings.franchiseEmail
+            : type === "jobApplication"
+              ? settings.careersEmail
+              : settings.email,
       });
       await sanityWriteClient
         .patch(document._id)

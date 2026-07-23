@@ -3,6 +3,7 @@ export interface NotificationMessage {
   submissionId: string;
   subject: string;
   summary: string;
+  recipient: string;
 }
 export interface NotificationTransport {
   send(message: NotificationMessage): Promise<{ id: string }>;

@@ -4,12 +4,19 @@ import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/page-hero";
 import { JobsAccordion } from "@/components/jobs-accordion";
-import { getJobs } from "@/lib/sanity/data";
+import { getJobs, getPage, getSiteSettings } from "@/lib/sanity/data";
 import { Link } from "@/i18n/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { siteUrl } from "@/lib/metadata";
 import { localize } from "@/lib/types";
+import { pageHeroProps } from "@/lib/page-content";
+const heroFallback = {
+  eyebrow: { ar: "انضم إلى فريقنا", en: "Join our team" },
+  title: { ar: "طوّر مسيرتك حيث تُبنى العلامات العظيمة.", en: "Grow your career where great brands are built." },
+  description: { ar: "من المطبخ إلى المكتب الرئيسي، فريقنا هو سبب عودة الضيوف. اعثر على مكانك في سبيل الراشد.", en: "From the kitchen to the head office, our people are the reason guests come back. Find your place at Sabeel Al-Rashid." },
+  image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1800&q=80&auto=format&fit=crop",
+};
 
 type BenefitIcon = "pay" | "health" | "learning" | "meals" | "growth" | "clock";
 
@@ -71,6 +78,7 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const page = await getPage("careersPage");
   return pageMetadata(
     locale,
     "careers",
@@ -78,7 +86,7 @@ export async function generateMetadata({
     {
       ar: "انضم إلى الفريق الذي يبني علامات الضيافة العظيمة.",
       en: "Join the team building great hospitality brands.",
-    },
+    }, undefined, page?.seo,
   );
 }
 export default async function Careers({
@@ -89,7 +97,12 @@ export default async function Careers({
   const { locale } = await params;
   setRequestLocale(locale);
   const ar = locale === "ar";
-  const jobs = await getJobs();
+  const [jobs, page, settings] = await Promise.all([
+    getJobs(),
+    getPage("careersPage"),
+    getSiteSettings(),
+  ]);
+  const hero = pageHeroProps(page, locale, heroFallback);
   const benefits: Array<{
     icon: BenefitIcon;
     title: string;
@@ -111,45 +124,48 @@ export default async function Careers({
         { icon: "growth", title: "Promote from within", description: "Most of our managers started on the front line." },
         { icon: "clock", title: "Stability", description: "A growing, well-governed group you can build a future with." },
       ];
+  const resolvedBenefits = page?.benefits?.length
+    ? page.benefits.map((benefit, index) => ({
+        icon: (["pay", "health", "learning", "meals", "growth", "clock"].includes(benefit.icon || "")
+          ? benefit.icon
+          : benefits[index % benefits.length].icon) as BenefitIcon,
+        title: localize(benefit.title, locale),
+        description: localize(benefit.description, locale),
+      }))
+    : benefits;
   return (
     <>
       <PageHero
         locale={locale}
-        eyebrow={ar ? "انضم إلى فريقنا" : "Join our team"}
-        title={
-          ar
-            ? "طوّر مسيرتك حيث تُبنى العلامات العظيمة."
-            : "Grow your career where great brands are built."
-        }
-        description={
-          ar
-            ? "من المطبخ إلى المكتب الرئيسي، فريقنا هو سبب عودة الضيوف. اعثر على مكانك في سبيل الراشد."
-            : "From the kitchen to the head office, our people are the reason guests come back. Find your place at Sabeel Al-Rashid."
-        }
-        image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1800&q=80&auto=format&fit=crop"
+        {...hero}
       />
       <section className="section">
         <div className="container split split--media-start">
           <Reveal>
             <div className="ph media-ph media-ph--tall">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1100&q=75&auto=format&fit=crop" alt="" loading="lazy" />
+              <img src={page?.culture?.image?.src || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1100&q=75&auto=format&fit=crop"} alt={page?.culture?.image?.alt ? localize(page.culture.image.alt, locale) : ""} loading="lazy" />
             </div>
           </Reveal>
           <Reveal delay={1}>
             <h2 className="h2">
-              {ar
+              {page?.culture?.heading
+                ? localize(page.culture.heading, locale)
+                : ar
                 ? "جادّون في الطعام. جادّون في الناس."
                 : "Serious about food. Serious about people."}
             </h2>
             <p className="lead">
-              {ar
+              {page?.culture?.body
+                ? localize(page.culture.body, locale)
+                : ar
                 ? "نتحرّك بسرعة، ونلتزم بمعايير عالية، ونمنح فريقنا مسؤوليةً حقيقية مبكراً. نستثمر في التدريب، ونرقّي من الداخل، ونحتفي بحرفة الضيافة."
                 : "We move fast, hold ourselves to high standards, and give people real ownership early. We invest in training, promote from within, and celebrate the craft of hospitality."}
             </p>
             <ul className="who__list careers-values">
-              <li>{ar ? "مساراتٌ واضحة للنمو والقيادة" : "Clear paths to grow and lead"}</li>
-              <li>{ar ? "أكاديمية تدريب لكل دور" : "Training academy for every role"}</li>
-              <li>{ar ? "ثقافة احترامٍ وجودة" : "A culture of respect and quality"}</li>
+              {(page?.cultureValues?.length
+                ? page.cultureValues.map((value) => localize(value, locale))
+                : [ar ? "مساراتٌ واضحة للنمو والقيادة" : "Clear paths to grow and lead", ar ? "أكاديمية تدريب لكل دور" : "Training academy for every role", ar ? "ثقافة احترامٍ وجودة" : "A culture of respect and quality"]
+              ).map((value) => <li key={value}>{value}</li>)}
             </ul>
           </Reveal>
         </div>
@@ -157,10 +173,10 @@ export default async function Careers({
       <section className="section section--panel">
         <div className="container">
           <Reveal className="section-head">
-            <h2 className="h2">{ar ? "المزايا والامتيازات" : "Benefits & perks"}</h2>
+            <h2 className="h2">{page?.benefitsHeading ? localize(page.benefitsHeading, locale) : ar ? "المزايا والامتيازات" : "Benefits & perks"}</h2>
           </Reveal>
           <div className="feature-grid">
-            {benefits.map((benefit, index) => (
+            {resolvedBenefits.map((benefit, index) => (
               <Reveal
                 className="feature"
                 delay={index % 3}
@@ -177,7 +193,7 @@ export default async function Careers({
       <section className="section section--soft section-anchor" id="positions">
         <div className="container">
           <div className="sec-head">
-            <h2 className="h2">{ar ? "الوظائف الشاغرة" : "Open positions"}</h2>
+            <h2 className="h2">{page?.positionsHeading ? localize(page.positionsHeading, locale) : ar ? "الوظائف الشاغرة" : "Open positions"}</h2>
           </div>
           <JobsAccordion jobs={jobs} locale={locale} />
         </div>
@@ -186,10 +202,10 @@ export default async function Careers({
         <div className="container careers-cta">
           <Reveal>
             <h2 className="h2">
-              {ar ? "جاهزٌ للانضمام إلينا؟" : "Ready to join us?"}
+              {page?.callToAction?.heading ? localize(page.callToAction.heading, locale) : ar ? "جاهزٌ للانضمام إلينا؟" : "Ready to join us?"}
             </h2>
-            <p className="lead">{ar ? "التقديم يستغرق دقائق قليلة — حدّثنا عن نفسك وأرفق سيرتك الذاتية. نراجع كل طلب." : "The application takes a few minutes — tell us about yourself and attach your CV. We review every application."}</p>
-            <Link className="btn btn--gold" href="/careers/apply">{ar ? "قدّم الآن" : "Apply now"} ←</Link>
+            <p className="lead">{page?.callToAction?.body ? localize(page.callToAction.body, locale) : ar ? "التقديم يستغرق دقائق قليلة — حدّثنا عن نفسك وأرفق سيرتك الذاتية. نراجع كل طلب." : "The application takes a few minutes — tell us about yourself and attach your CV. We review every application."}</p>
+            <Link className="btn btn--gold" href="/careers/apply">{page?.callToActionLabel ? localize(page.callToActionLabel, locale) : ar ? "قدّم الآن" : "Apply now"} ←</Link>
           </Reveal>
         </div>
       </section>
@@ -201,11 +217,12 @@ export default async function Careers({
             "@type": "JobPosting",
             title: localize(job.title, locale),
             description: localize(job.description, locale),
-            datePosted: "2026-07-01",
-            employmentType: "FULL_TIME",
+            datePosted: job.publishedAt,
+            validThrough: job.expiresAt,
+            employmentType: localize(job.type, "en"),
             hiringOrganization: {
               "@type": "Organization",
-              name: "Sabeel Al-Rashid",
+              name: localize(settings.companyName, locale),
               sameAs: siteUrl,
             },
             jobLocation: {
@@ -213,6 +230,7 @@ export default async function Careers({
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Baghdad",
+                streetAddress: localize(settings.address, locale),
                 addressCountry: "IQ",
               },
             },

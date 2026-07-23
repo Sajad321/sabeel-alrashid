@@ -2,27 +2,39 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { localize, type SiteSettings } from "@/lib/types";
 
-export function SiteFooter() {
+export function SiteFooter({
+  settings,
+  locale,
+}: {
+  settings: SiteSettings;
+  locale: Locale;
+}) {
   const n = useTranslations("nav"),
     f = useTranslations("footer"),
     c = useTranslations("common");
+  const companyName = localize(settings.companyName, locale);
+  const phoneHref = `tel:${settings.phone.replace(/[^\d+]/g, "")}`;
   return (
     <footer className="site-footer">
       <div className="container footer__main">
         <div className="footer__grid">
           <div className="footer__brand">
-            <img src="/assets/logos/sabeel-gold.png" alt="Sabeel Al-Rashid" />
+            <img src="/assets/logos/sabeel-gold.png" alt={companyName} />
             <div className="footer__social">
-              <a href="#" aria-label="LinkedIn">
-                in
-              </a>
-              <a href="#" aria-label="X">
-                X
-              </a>
-              <a href="#" aria-label="Facebook">
-                f
-              </a>
+              {settings.socialLinks.map((social) => (
+                <a
+                  href={social.url}
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noreferrer"
+                  key={`${social.label}-${social.url}`}
+                >
+                  {socialGlyph(social.label)}
+                </a>
+              ))}
             </div>
           </div>
           <FooterCol
@@ -51,15 +63,15 @@ export function SiteFooter() {
           <div className="footer__col footer__col--contact">
             <h4>{f("contact")}</h4>
             <ul>
-              <li>Baghdad, Iraq — Mansour</li>
+              <li>{localize(settings.address, locale)}</li>
               <li>
-                <a href="tel:+9647700000000" dir="ltr">
-                  +964 770 000 0000
+                <a href={phoneHref} dir="ltr">
+                  {settings.phone}
                 </a>
               </li>
               <li>
-                <a href="mailto:info@sabeelalrashid.com">
-                  info@sabeelalrashid.com
+                <a href={`mailto:${settings.email}`}>
+                  {settings.email}
                 </a>
               </li>
             </ul>
@@ -77,6 +89,15 @@ export function SiteFooter() {
       </div>
     </footer>
   );
+}
+function socialGlyph(label: string) {
+  const name = label.toLowerCase();
+  if (name.includes("linkedin")) return "in";
+  if (name.includes("facebook")) return "f";
+  if (name.includes("instagram")) return "◎";
+  if (name.includes("tiktok")) return "♪";
+  if (name === "x" || name.includes("twitter")) return "X";
+  return label.slice(0, 2);
 }
 function FooterCol({ title, links }: { title: string; links: string[][] }) {
   return (

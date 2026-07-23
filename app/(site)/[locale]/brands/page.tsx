@@ -3,16 +3,24 @@ import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/page-hero";
-import { getBrands } from "@/lib/sanity/data";
+import { getBrands, getPage } from "@/lib/sanity/data";
 import { localize } from "@/lib/types";
 import { BrandCarousel } from "@/components/brand-carousel";
 import { Reveal } from "@/components/reveal";
+import { pageHeroProps } from "@/lib/page-content";
+const heroFallback = {
+  eyebrow: { ar: "محفظة العلامات", en: "Brand portfolio" },
+  title: { ar: "محفظةٌ من العلامات التي يحبّها الناس.", en: "A portfolio of brands people love." },
+  description: { ar: "كل علامةٍ تقف بذاتها — بهويّتها ومطابخها وجمهورها — مدعومةً بقوّة سبيل الراشد المشتركة.", en: "Each brand stands on its own — with its own identity, kitchens and following — powered by the shared strength of Sabeel Al-Rashid." },
+  image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80&auto=format&fit=crop",
+};
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const page = await getPage("brandsPage");
   return pageMetadata(
     locale,
     "brands",
@@ -20,7 +28,7 @@ export async function generateMetadata({
     {
       ar: "علامات مطاعم يحبّها الناس في العراق.",
       en: "Restaurant brands people love across Iraq.",
-    },
+    }, undefined, page?.seo,
   );
 }
 export default async function Brands({
@@ -31,23 +39,13 @@ export default async function Brands({
   const { locale } = await params;
   setRequestLocale(locale);
   const ar = locale === "ar";
-  const brands = await getBrands();
+  const [brands, page] = await Promise.all([getBrands(), getPage("brandsPage")]);
+  const hero = pageHeroProps(page, locale, heroFallback);
   return (
     <>
       <PageHero
         locale={locale}
-        eyebrow={ar ? "محفظة العلامات" : "Brand portfolio"}
-        title={
-          ar
-            ? "محفظةٌ من العلامات التي يحبّها الناس."
-            : "A portfolio of brands people love."
-        }
-        description={
-          ar
-            ? "كل علامةٍ تقف بذاتها — بهويّتها ومطابخها وجمهورها — مدعومةً بقوّة سبيل الراشد المشتركة."
-            : "Each brand stands on its own — with its own identity, kitchens and following — powered by the shared strength of Sabeel Al-Rashid."
-        }
-        image="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80&auto=format&fit=crop"
+        {...hero}
       />
       {brands.map((brand, i) => (
         <section className="brand-block" key={brand.slug}>

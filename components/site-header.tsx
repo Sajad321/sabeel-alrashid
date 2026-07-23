@@ -16,7 +16,7 @@ const nav = [
   { href: "/contact", key: "contact" },
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ companyName }: { companyName: string }) {
   const t = useTranslations("nav");
   const path = usePathname();
   const [open, setOpen] = useState(false);
@@ -42,8 +42,8 @@ export function SiteHeader() {
         id="siteHeader"
       >
         <div className="container nav">
-          <Link className="nav__logo" href="/" aria-label="Sabeel Al-Rashid">
-            <img src="/assets/logos/sabeel-gold.png" alt="Sabeel Al-Rashid" />
+          <Link className="nav__logo" href="/" aria-label={companyName}>
+            <img src="/assets/logos/sabeel-gold.png" alt={companyName} />
           </Link>
           <nav className="nav__links" aria-label={t("menu")}>
             {nav.map((item) => (
@@ -80,7 +80,7 @@ export function SiteHeader() {
         <div className="container">
           <div className="mobile-menu__top">
             <Link className="nav__logo" href="/" onClick={() => setOpen(false)}>
-              <img src="/assets/logos/sabeel-gold.png" alt="Sabeel Al-Rashid" />
+              <img src="/assets/logos/sabeel-gold.png" alt={companyName} />
             </Link>
             <button
               className="mobile-menu__close"

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import type { Branch, Brand } from "@/lib/types";
+import type { Branch, CmsBrand } from "@/lib/types";
 import { localize } from "@/lib/types";
 
 export function BranchMap({
@@ -9,7 +9,7 @@ export function BranchMap({
   locale,
 }: {
   branches: Branch[];
-  brands: Brand[];
+  brands: CmsBrand[];
   locale: "ar" | "en";
 }) {
   const [active, setActive] = useState(0);
@@ -106,6 +106,25 @@ export function BranchMap({
                   <div className="bcard__city">
                     ⌖ {localize(branch.district, locale)}
                   </div>
+                  {branch.address && (
+                    <div className="bcard__address">
+                      {localize(branch.address, locale)}
+                    </div>
+                  )}
+                  {branch.phone && (
+                    <a
+                      dir="ltr"
+                      href={`tel:${branch.phone.replace(/[^\d+]/g, "")}`}
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      {branch.phone}
+                    </a>
+                  )}
+                  {branch.hours && (
+                    <div className="bcard__hours">
+                      {localize(branch.hours, locale)}
+                    </div>
+                  )}
                 </div>
                 <a
                   className="bcard__btn bcard__btn--go"

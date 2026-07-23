@@ -100,34 +100,48 @@ export const stat = defineType({
   ],
   preview: { select: { title: "value", subtitle: "label.en" } },
 });
-export const pageSection = defineType({
-  name: "pageSection",
-  title: "Page section",
+export const pageHero = defineType({
+  name: "pageHero",
+  title: "Page hero",
   type: "object",
   fields: [
-    defineField({
-      name: "sectionType",
-      type: "string",
-      options: {
-        list: [
-          "hero",
-          "introduction",
-          "statistics",
-          "divisions",
-          "brands",
-          "branches",
-          "news",
-          "sustainability",
-          "content",
-          "form",
-        ],
-      },
-      validation: (r) => r.required(),
-    }),
+    defineField({ name: "eyebrow", type: "localizedString" }),
+    defineField({ name: "title", type: "localizedString" }),
+    defineField({ name: "description", type: "localizedText" }),
+    defineField({ name: "image", type: "imageWithAlt" }),
+  ],
+  preview: { select: { title: "title.en", subtitle: "eyebrow.en", media: "image" } },
+});
+export const contentBlock = defineType({
+  name: "contentBlock",
+  title: "Content block",
+  type: "object",
+  fields: [
     defineField({ name: "heading", type: "localizedString" }),
     defineField({ name: "body", type: "localizedText" }),
     defineField({ name: "image", type: "imageWithAlt" }),
-    defineField({ name: "enabled", type: "boolean", initialValue: true }),
   ],
-  preview: { select: { title: "heading.en", subtitle: "sectionType" } },
+  preview: { select: { title: "heading.en", subtitle: "heading.ar", media: "image" } },
+});
+export const featureItem = defineType({
+  name: "featureItem",
+  title: "Feature",
+  type: "object",
+  fields: [
+    defineField({ name: "icon", type: "string" }),
+    defineField({ name: "title", type: "localizedString" }),
+    defineField({ name: "description", type: "localizedText" }),
+  ],
+  preview: { select: { title: "title.en", subtitle: "title.ar" } },
+});
+export const timelineItem = defineType({
+  name: "timelineItem",
+  title: "Timeline item",
+  type: "object",
+  fields: [
+    defineField({ name: "year", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "title", type: "localizedString" }),
+    defineField({ name: "description", type: "localizedText" }),
+  ],
+  preview: { select: { title: "title.en", subtitle: "year" } },
 });

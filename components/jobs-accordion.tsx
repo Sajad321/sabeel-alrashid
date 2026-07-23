@@ -3,6 +3,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import type { Job } from "@/lib/types";
 import { localize } from "@/lib/types";
 import { Link } from "@/i18n/navigation";
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
 
 export function JobsAccordion({
   jobs,
@@ -37,6 +38,22 @@ export function JobsAccordion({
           <Accordion.Content className="position__body">
             <div className="position__body-inner">
               <p>{localize(job.description, locale)}</p>
+              {job.responsibilities?.[locale]?.length ? (
+                <div className="position__details">
+                  <h4>{locale === "ar" ? "المسؤوليات" : "Responsibilities"}</h4>
+                  <PortableText
+                    value={job.responsibilities[locale] as PortableTextBlock[]}
+                  />
+                </div>
+              ) : null}
+              {job.requirements?.[locale]?.length ? (
+                <div className="position__details">
+                  <h4>{locale === "ar" ? "المتطلبات" : "Requirements"}</h4>
+                  <PortableText
+                    value={job.requirements[locale] as PortableTextBlock[]}
+                  />
+                </div>
+              ) : null}
               <Link
                 className="btn btn--ink"
                 href={{ pathname: "/careers/apply", query: { job: job.slug } }}

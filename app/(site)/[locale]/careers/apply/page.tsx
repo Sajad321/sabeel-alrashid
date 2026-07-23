@@ -3,14 +3,22 @@ import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/metadata";
 import { SubmissionForm } from "@/components/submission-form";
-import { getJobs } from "@/lib/sanity/data";
+import { getJobs, getPage } from "@/lib/sanity/data";
 import { PageHero } from "@/components/page-hero";
+import { pageHeroProps } from "@/lib/page-content";
+const heroFallback = {
+  eyebrow: { ar: "قدّم الآن", en: "Apply" },
+  title: { ar: "طلب توظيف", en: "Job application" },
+  description: { ar: "املأ بياناتك أدناه — الحقول المعلّمة بـ * إلزامية. نراجع كل طلب.", en: "Fill in your details below — fields marked * are required. We review every application." },
+  image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1900&q=75&auto=format&fit=crop",
+};
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const page = await getPage("applicationPage");
   return pageMetadata(
     locale,
     "careers/apply",
@@ -18,7 +26,7 @@ export async function generateMetadata({
     {
       ar: "قدّم للانضمام إلى فريق سبيل الراشد.",
       en: "Apply to join the Sabeel Al-Rashid team.",
-    },
+    }, undefined, page?.seo,
   );
 }
 export default async function Apply({
@@ -32,9 +40,10 @@ export default async function Apply({
   const { job = "" } = await searchParams;
   setRequestLocale(locale);
   const ar = locale === "ar";
-  const jobs = await getJobs();
+  const [jobs, page] = await Promise.all([getJobs(), getPage("applicationPage")]);
+  const hero = pageHeroProps(page, locale, heroFallback);
   return <>
-    <PageHero locale={locale} eyebrow={ar ? "قدّم الآن" : "Apply"} parent={{label: ar ? "الوظائف" : "Careers", href: "/careers"}} title={ar ? "طلب توظيف" : "Job application"} description={ar ? "املأ بياناتك أدناه — الحقول المعلّمة بـ * إلزامية. نراجع كل طلب." : "Fill in your details below — fields marked * are required. We review every application."} image="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1900&q=75&auto=format&fit=crop" />
+    <PageHero locale={locale} parent={{label: ar ? "الوظائف" : "Careers", href: "/careers"}} {...hero} />
     <section className="section">
       <div className="container form-container">
         <SubmissionForm

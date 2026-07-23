@@ -11,6 +11,10 @@ export async function POST(request: NextRequest) {
     slug?: string;
   };
   if (body._type) revalidateTag(`sanity:${body._type}`, "max");
+  if (body._type === "newsCategory")
+    revalidateTag("sanity:newsArticle", "max");
+  if (body._type === "siteSettings")
+    revalidateTag("sanity:siteSettings", "max");
   revalidatePath("/ar", "layout");
   revalidatePath("/en", "layout");
   return NextResponse.json({ revalidated: true, now: Date.now() });

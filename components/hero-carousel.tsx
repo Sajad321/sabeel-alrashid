@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { LocalizedString } from "@/lib/types";
 
 type Slide = {
-  image: string;
+  image: string | { src: string; alt?: LocalizedString };
   eyebrow: LocalizedString;
   title: LocalizedString;
 };
@@ -51,13 +51,17 @@ export function HeroCarousel({
           {slides.map((slide, i) => (
             <div
               className="carousel__slide"
-              key={slide.image}
+              key={typeof slide.image === "string" ? slide.image : slide.image.src}
               aria-hidden={i !== index}
             >
               <img
                 className="carousel__img"
-                src={slide.image}
-                alt=""
+                src={typeof slide.image === "string" ? slide.image : slide.image.src}
+                alt={
+                  typeof slide.image === "string"
+                    ? ""
+                    : slide.image.alt?.[locale] || ""
+                }
                 fetchPriority={i === 0 ? "high" : "auto"}
               />
               <div className="carousel__cap">

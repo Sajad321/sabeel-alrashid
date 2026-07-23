@@ -7,7 +7,9 @@ import {
 } from "@/lib/submissions";
 import { rateLimit } from "@/lib/rate-limit";
 import { sanityWriteClient } from "@/lib/sanity/client";
-const MAX = 5 * 1024 * 1024;
+// Vercel Functions reject request bodies above 4.5 MB, so leave room for
+// multipart form overhead.
+const MAX = 4 * 1024 * 1024;
 const allowed = new Set([
   "application/pdf",
   "application/msword",

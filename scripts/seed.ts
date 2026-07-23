@@ -49,7 +49,7 @@ const block = (text: string) => [
 
 async function seed() {
   const tx = client.transaction();
-  tx.createOrReplace({
+  tx.createIfNotExists({
     _id: "siteSettings",
     _type: "siteSettings",
     companyName: { ar: "مجموعة سبيل الراشد", en: "Sabeel Al-Rashid Group" },
@@ -59,7 +59,7 @@ async function seed() {
     franchiseEmail: "invest@sabeelalrashid.com",
     careersEmail: "careers@sabeelalrashid.com",
   });
-  tx.createOrReplace({
+  tx.createIfNotExists({
     _id: "homePage",
     _type: "homePage",
     title: { ar: "الرئيسية", en: "Home" },
@@ -71,19 +71,19 @@ async function seed() {
     "careersPage",
     "contactPage",
     "applicationPage",
+    "newsPage",
   ];
   for (const type of pages)
-    tx.createOrReplace({
+    tx.createIfNotExists({
       _id: type,
       _type: type,
       title: {
         ar: type === "aboutPage" ? "من نحن" : type,
         en: type.replace("Page", ""),
       },
-      sections: [],
     });
   for (const [i, division] of divisions.entries())
-    tx.createOrReplace({
+    tx.createIfNotExists({
       _id: `division.${i}`,
       _type: "division",
       name: localized(division.title),
@@ -93,7 +93,7 @@ async function seed() {
   for (const category of Array.from(
     new Map(articles.map((a) => [a.categoryKey, a.category])).entries(),
   ))
-    tx.createOrReplace({
+    tx.createIfNotExists({
       _id: `newsCategory.${category[0]}`,
       _type: "newsCategory",
       title: category[1],
@@ -119,7 +119,7 @@ async function seed() {
         alt: item.alt,
       })),
     );
-    await client.createOrReplace({
+    await client.createIfNotExists({
       _id: `brand.${brand.slug}`,
       _type: "brand",
       name: brand.name,
@@ -140,7 +140,7 @@ async function seed() {
     });
   }
   for (const branch of branches)
-    await client.createOrReplace({
+    await client.createIfNotExists({
       _id: `branch.${branch.slug}`,
       _type: "branch",
       name: branch.district,
@@ -158,7 +158,7 @@ async function seed() {
     try {
       image = await imageAsset(article.image, `news-${article.slug}.jpg`);
     } catch {}
-    await client.createOrReplace({
+    await client.createIfNotExists({
       _id: `newsArticle.${article.slug}`,
       _type: "newsArticle",
       title: article.title,
@@ -174,7 +174,7 @@ async function seed() {
     });
   }
   for (const job of jobs)
-    await client.createOrReplace({
+    await client.createIfNotExists({
       _id: `job.${job.slug}`,
       _type: "job",
       title: job.title,
@@ -187,7 +187,7 @@ async function seed() {
     });
   for (const [index, member] of teamMembers.entries()) {
     const photo = await imageAsset(member.photo, `team-${member.slug}.jpg`);
-    await client.createOrReplace({
+    await client.createIfNotExists({
       _id: `teamMember.${member.slug}`,
       _type: "teamMember",
       name: member.name,

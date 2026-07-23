@@ -79,6 +79,7 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const home = await getHomePage();
   return pageMetadata(
     locale,
     "",
@@ -86,7 +87,7 @@ export async function generateMetadata({
     {
       ar: "مجموعة عراقية متكاملة لإدارة المطاعم وإنتاج الأغذية والتجارة العامة.",
       en: "An integrated Iraqi group spanning restaurant management, food production and general trade.",
-    },
+    }, undefined, home?.seo,
   );
 }
 export default async function Home({
@@ -113,36 +114,33 @@ export default async function Home({
           <Reveal className="introlede">
             <div className="introlede__head">
               <h2 className="introlede__title">
-                {ar
+                {home?.introduction?.heading
+                  ? localize(home.introduction.heading, locale)
+                  : ar
                   ? "نمنح علامات الضيافة قوّةً للنمو."
                   : "We give hospitality brands the muscle to grow."}
               </h2>
               <p className="introlede__lead">
-                {ar
+                {home?.introduction?.body
+                  ? localize(home.introduction.body, locale)
+                  : ar
                   ? "تأسّست سبيل الراشد عام ٢٠١٤، ونمت من مشروعٍ واحد إلى مجموعةٍ متكاملة تمتدّ عبر المطاعم وإنتاج الأغذية والتجارة العامة في عموم العراق."
                   : "Founded in 2014, Sabeel Al-Rashid has grown from a single venture into an integrated group spanning restaurants, food production and general trade across Iraq."}
               </p>
             </div>
             <div className="introlede__media">
               <img
-                src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1600&q=80&auto=format&fit=crop"
-                alt=""
+                src={home?.introduction?.image?.src || "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1600&q=80&auto=format&fit=crop"}
+                alt={home?.introduction?.image?.alt ? localize(home.introduction.image.alt, locale) : ""}
               />
             </div>
             <div className="introlede__bar">
               <ul className="introlede__facts">
-                <li>
-                  <b>2014</b>
-                  <span>{ar ? "سنة التأسيس" : "Established"}</span>
-                </li>
-                <li>
-                  <b>3</b>
-                  <span>{ar ? "قطاعات" : "Divisions"}</span>
-                </li>
-                <li>
-                  <b>{ar ? "بغداد" : "Baghdad"}</b>
-                  <span>{ar ? "المقر" : "Headquarters"}</span>
-                </li>
+                {(home?.introductionFacts?.length ? home.introductionFacts : [
+                  { value: "2014", label: { ar: "سنة التأسيس", en: "Established" } },
+                  { value: "3", label: { ar: "قطاعات", en: "Divisions" } },
+                  { value: ar ? "بغداد" : "Baghdad", label: { ar: "المقر", en: "Headquarters" } },
+                ]).map((fact) => <li key={fact.label.en}><b>{fact.value}</b><span>{localize(fact.label, locale)}</span></li>)}
               </ul>
               <Link className="btn btn--ink" href="/about">
                 {ar ? "المزيد عنّا" : "More about us"} ←
@@ -153,7 +151,9 @@ export default async function Home({
       </section>
       <section className="section--tight statband">
         <div className="container grid cols-4">
-          {([
+          {(home?.statistics?.length
+            ? home.statistics.map((stat, index) => [Number.parseInt(stat.value, 10) || 0, localize(stat.label, locale), (["brands", "branches", "divisions", "team"] as const)[index % 4]] as const)
+            : [
             [2, ar ? "علامات مطاعم" : "Restaurant brands", "brands"],
             [45, ar ? "فرعاً في العراق" : "Branches across Iraq", "branches"],
             [3, ar ? "قطاعات أعمال" : "Business divisions", "divisions"],
@@ -174,7 +174,9 @@ export default async function Home({
         <div className="container">
           <div className="sec-head">
             <h2 className="h2">
-              {ar
+              {home?.divisionsHeading
+                ? localize(home.divisionsHeading, locale)
+                : ar
                 ? "ثلاثة قطاعات، منصّةٌ واحدة."
                 : "Three divisions, one platform."}
             </h2>
@@ -183,7 +185,10 @@ export default async function Home({
             {divisions.map((d) => (
               <Link className="divcard" href="/about" key={d.title.en}>
                 <div className="divcard__media">
-                  <img src={d.image} alt="" />
+                  <img
+                    src={d.image.src}
+                    alt={d.image.alt ? localize(d.image.alt, locale) : localize(d.title, locale)}
+                  />
                 </div>
                 <div className="divcard__bar">
                   <span>{localize(d.title, locale)}</span>
@@ -198,7 +203,9 @@ export default async function Home({
         <div className="container">
           <div className="sec-head">
             <h2 className="h2">
-              {ar
+              {home?.brandsHeading
+                ? localize(home.brandsHeading, locale)
+                : ar
                 ? "علاماتٌ يعود إليها الناس."
                 : "Brands people come back for."}
             </h2>
@@ -239,11 +246,13 @@ export default async function Home({
           <div className="branches-head">
             <div>
             <h2 className="h2">
-              {ar ? "اعثر على فرعٍ في بغداد" : "Find a branch in Baghdad"}
+              {home?.branchesHeading ? localize(home.branchesHeading, locale) : ar ? "اعثر على فرعٍ في بغداد" : "Find a branch in Baghdad"}
             </h2>
             </div>
             <p className="lead">
-              {ar
+              {home?.branchesDescription
+                ? localize(home.branchesDescription, locale)
+                : ar
                 ? "اضغط على أي علامة لعرض الفرع مع إحداثياته والاتجاهات إليه. محافظاتٌ أخرى قريباً."
                 : "Tap any pin to see the branch with its coordinates and directions. More governorates coming soon."}
             </p>
@@ -254,7 +263,7 @@ export default async function Home({
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <h2 className="h2">{ar ? "أحدث الأخبار" : "Latest news"}</h2>
+            <h2 className="h2">{home?.newsHeading ? localize(home.newsHeading, locale) : ar ? "أحدث الأخبار" : "Latest news"}</h2>
             <Link className="btn btn--outline" href="/news">
               {ar ? "كل الأخبار" : "All news"} ←
             </Link>
@@ -263,7 +272,10 @@ export default async function Home({
             {articles.slice(0, 4).map((a) => (
               <Link className="ncard" href={`/news/${a.slug}`} key={a.slug}>
                 <div className="ncard__media">
-                  <img src={a.image} alt="" />
+                  <img
+                    src={a.image.src}
+                    alt={a.image.alt ? localize(a.image.alt, locale) : localize(a.title, locale)}
+                  />
                 </div>
                 <div className="ncard__body">
                   <h3 className="ncard__title">{localize(a.title, locale)}</h3>
@@ -278,7 +290,7 @@ export default async function Home({
         <div className="container">
           <Reveal className="sec-head">
             <h2 className="h2">
-              {ar ? "نظرةٌ أقرب على علاماتنا." : "A closer look at our brands."}
+              {home?.brandFocusHeading ? localize(home.brandFocusHeading, locale) : ar ? "نظرةٌ أقرب على علاماتنا." : "A closer look at our brands."}
             </h2>
           </Reveal>
           {brands.map((brand, index) => (
@@ -288,7 +300,10 @@ export default async function Home({
               key={brand.slug}
             >
               <div className="infocard__media">
-                <img src={brand.image} alt="" />
+                <img
+                  src={brand.image.src}
+                  alt={brand.image.alt ? localize(brand.image.alt, locale) : localize(brand.name, locale)}
+                />
               </div>
               <div className="infocard__body">
                 <img
@@ -319,25 +334,31 @@ export default async function Home({
           <Reveal className="infocard infocard--rev">
             <div className="infocard__media">
               <img
-                src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1100&q=80&auto=format&fit=crop"
-                alt=""
+                src={home?.sustainability?.image?.src || "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1100&q=80&auto=format&fit=crop"}
+                alt={home?.sustainability?.image?.alt ? localize(home.sustainability.image.alt, locale) : ""}
               />
             </div>
             <div className="infocard__body">
               <h2 className="h2">
-                {ar
+                {home?.sustainability?.heading
+                  ? localize(home.sustainability.heading, locale)
+                  : ar
                   ? "مسؤوليةٌ من المزرعة إلى المائدة."
                   : "Responsible from farm to table."}
               </h2>
               <p className="lead">
-                {ar
+                {home?.sustainability?.body
+                  ? localize(home.sustainability.body, locale)
+                  : ar
                   ? "مطابخ عالية الكفاءة وتوريدٌ مسؤول وتقليل الهدر — العلامات الباقية تُبنى على ممارساتٍ باقية."
                   : "Efficient kitchens, responsible sourcing and reduced waste — lasting brands are built on lasting practices."}
               </p>
               <ul className="infocard__facts">
-                <li><b>30%</b><span>{ar ? "هدر أقل" : "Less waste"}</span></li>
-                <li><b>100%</b><span>{ar ? "حلال معتمد" : "Halal certified"}</span></li>
-                <li><b>12</b><span>{ar ? "مورّداً محلياً" : "Local suppliers"}</span></li>
+                {(home?.sustainabilityFacts?.length ? home.sustainabilityFacts : [
+                  { value: "30%", label: { ar: "هدر أقل", en: "Less waste" } },
+                  { value: "100%", label: { ar: "حلال معتمد", en: "Halal certified" } },
+                  { value: "12", label: { ar: "مورّداً محلياً", en: "Local suppliers" } },
+                ]).map((fact) => <li key={fact.label.en}><b>{fact.value}</b><span>{localize(fact.label, locale)}</span></li>)}
               </ul>
             </div>
           </Reveal>

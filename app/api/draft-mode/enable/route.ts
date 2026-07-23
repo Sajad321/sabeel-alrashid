@@ -1,14 +1,15 @@
-import { draftMode } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
-export async function GET(request: NextRequest) {
-  const secret = request.nextUrl.searchParams.get("secret");
-  if (
-    process.env.SANITY_PREVIEW_SECRET &&
-    secret !== process.env.SANITY_PREVIEW_SECRET
-  )
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  (await draftMode()).enable();
-  return NextResponse.redirect(
-    new URL(request.nextUrl.searchParams.get("redirect") || "/ar", request.url),
+import { defineEnableDraftMode } from "next-sanity/draft-mode";
+import { sanityClient } from "@/lib/sanity/client";
+
+if (!sanityClient) {
+  throw new Error(
+    "NEXT_PUBLIC_SANITY_PROJECT_ID is required to enable Sanity Draft Mode.",
   );
 }
+
+export const { GET } = defineEnableDraftMode({
+  client: sanityClient.withConfig({
+    token: process.env.SANITY_API_READ_TOKEN,
+    useCdn: false,
+  }),
+});

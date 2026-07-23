@@ -7,6 +7,7 @@ import { getArticles } from "@/lib/sanity/data";
 import { localize } from "@/lib/types";
 import { Link } from "@/i18n/navigation";
 import { JsonLd } from "@/components/json-ld";
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
 export async function generateStaticParams() {
   return (await getArticles()).map((a) => ({ slug: a.slug }));
 }
@@ -24,14 +25,15 @@ export async function generateMetadata({
       `news/${slug}`,
       article.title,
       article.excerpt,
-      article.image,
+      article.image.src,
+      article.seo,
     ),
     openGraph: {
       type: "article",
       title: localize(article.title, locale),
       description: localize(article.excerpt, locale),
       publishedTime: article.date,
-      images: [article.image],
+      images: [article.seo?.image || article.image.src],
     },
   };
 }
@@ -68,12 +70,19 @@ export default async function ArticlePage({
         </div>
         <h1 className="h1">{localize(article.title, locale)}</h1>
         <div className="article__hero">
-          <img src={article.image} alt="" />
+          <img
+            src={article.image.src}
+            alt={
+              article.image.alt
+                ? localize(article.image.alt, locale)
+                : localize(article.title, locale)
+            }
+          />
         </div>
         <div className="article__body">
-          {article.body.map((p, i) => (
-            <p key={i}>{localize(p, locale)}</p>
-          ))}
+          <PortableText
+            value={article.body[locale] as PortableTextBlock[]}
+          />
         </div>
         <div className="article__back">
           <Link className="btn btn--outline" href="/news">
@@ -88,7 +97,7 @@ export default async function ArticlePage({
           headline: localize(article.title, locale),
           description: localize(article.excerpt, locale),
           datePublished: article.date,
-          image: [article.image],
+          image: [article.image.src],
           author: { "@type": "Organization", name: "Sabeel Al-Rashid" },
           publisher: {
             "@type": "Organization",

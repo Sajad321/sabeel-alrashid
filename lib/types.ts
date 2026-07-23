@@ -2,6 +2,59 @@ import type { Locale } from "@/i18n/routing";
 
 export type LocalizedString = { ar: string; en: string };
 export type LocalizedText = LocalizedString;
+export type LocalizedImage = {
+  src: string;
+  alt?: LocalizedString;
+};
+export type SeoFields = {
+  title?: LocalizedString;
+  description?: LocalizedText;
+  image?: string;
+  noIndex?: boolean;
+};
+export type PageHeroContent = {
+  eyebrow?: LocalizedString;
+  title?: LocalizedString;
+  description?: LocalizedText;
+  image?: LocalizedImage;
+};
+export type ContentBlock = {
+  heading?: LocalizedString;
+  body?: LocalizedText;
+  image?: LocalizedImage;
+};
+export type FeatureItem = {
+  icon?: string;
+  title: LocalizedString;
+  description: LocalizedText;
+};
+export type PageDocument = {
+  title?: LocalizedString;
+  hero?: PageHeroContent;
+  seo?: SeoFields;
+  introduction?: ContentBlock;
+  statistics?: Array<{ value: string; label: LocalizedString }>;
+  historyHeading?: LocalizedString;
+  timeline?: Array<{
+    year: string;
+    title: LocalizedString;
+    description: LocalizedText;
+  }>;
+  vision?: ContentBlock;
+  mission?: ContentBlock;
+  teamHeading?: LocalizedString;
+  featuresHeading?: LocalizedString;
+  features?: FeatureItem[];
+  formHeading?: LocalizedString;
+  formDescription?: LocalizedText;
+  culture?: ContentBlock;
+  cultureValues?: LocalizedString[];
+  benefitsHeading?: LocalizedString;
+  benefits?: FeatureItem[];
+  positionsHeading?: LocalizedString;
+  callToAction?: ContentBlock;
+  callToActionLabel?: LocalizedString;
+};
 export const localize = (value: LocalizedString, locale: Locale) =>
   value[locale] || value.ar;
 
@@ -21,6 +74,10 @@ export type Branch = {
   brand: "super-chicken" | "alrukn";
   district: LocalizedString;
   side: LocalizedString;
+  name?: LocalizedString;
+  address?: LocalizedText;
+  phone?: string;
+  hours?: LocalizedText;
   lat: number;
   lng: number;
   x: number;
@@ -35,6 +92,7 @@ export type Article = {
   categoryKey: string;
   date: string;
   image: string;
+  seo?: SeoFields;
 };
 export type Job = {
   slug: string;
@@ -42,10 +100,34 @@ export type Job = {
   department: LocalizedString;
   type: LocalizedString;
   description: LocalizedText;
+  responsibilities?: { ar: unknown[]; en: unknown[] };
+  requirements?: { ar: unknown[]; en: unknown[] };
+  publishedAt?: string;
+  expiresAt?: string;
 };
 export type TeamMember = {
   slug: string;
   name: LocalizedString;
   role: LocalizedString;
   photo: string;
+};
+export type CmsBrand = Omit<Brand, "image"> & { image: LocalizedImage };
+export type CmsArticle = Omit<Article, "body" | "image"> & {
+  body: { ar: unknown[]; en: unknown[] };
+  image: LocalizedImage;
+};
+export type CmsTeamMember = Omit<TeamMember, "photo"> & {
+  photo: LocalizedImage;
+};
+export type SiteSettings = {
+  companyName: LocalizedString;
+  address: LocalizedText;
+  phone: string;
+  email: string;
+  franchiseEmail: string;
+  careersEmail: string;
+  secondaryPhone?: string;
+  workingHours?: LocalizedString;
+  socialLinks: Array<{ label: string; url: string }>;
+  defaultSeo?: SeoFields;
 };

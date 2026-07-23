@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { articles } from "@/lib/content";
 import { siteUrl } from "@/lib/metadata";
+import { getArticles } from "@/lib/sanity/data";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const articles = await getArticles();
   const pages = [
     "",
     "about",

@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "sanity:typegen": "sanity schema extract && sanity typegen generate",
-    "seed": "sanity exec scripts/seed.ts"
+    "seed": "sanity exec scripts/seed.ts && sanity exec scripts/connect-cms.ts",
+    "cms:connect": "sanity exec scripts/connect-cms.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

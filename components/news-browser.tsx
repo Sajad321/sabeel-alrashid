@@ -1,7 +1,7 @@
 "use client";
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import type { Article } from "@/lib/types";
+import type { CmsArticle } from "@/lib/types";
 import { localize } from "@/lib/types";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
@@ -9,7 +9,7 @@ export function NewsBrowser({
   articles,
   locale,
 }: {
-  articles: Article[];
+  articles: CmsArticle[];
   locale: "ar" | "en";
 }) {
   const params = useSearchParams(),
@@ -23,6 +23,9 @@ export function NewsBrowser({
       articles.map((a) => [a.categoryKey, localize(a.category, locale)]),
     ).entries(),
   );
+  const years = Array.from(
+    new Set(articles.map((article) => article.date.slice(0, 4))),
+  ).sort((a, b) => b.localeCompare(a));
   const update = (key: string, value: string) => {
     const next = new URLSearchParams(params.toString());
     if (value === "all") next.delete(key);
@@ -71,7 +74,11 @@ export function NewsBrowser({
             <option value="all">
               {locale === "ar" ? "كل السنوات" : "All years"}
             </option>
-            <option value="2026">2026</option>
+            {years.map((availableYear) => (
+              <option key={availableYear} value={availableYear}>
+                {availableYear}
+              </option>
+            ))}
           </select>
           <select
             aria-label={locale === "ar" ? "الترتيب" : "Sort"}
@@ -95,7 +102,14 @@ export function NewsBrowser({
             key={article.slug}
           >
             <div className="ncard__media">
-              <img src={article.image} alt="" />
+              <img
+                src={article.image.src}
+                alt={
+                  article.image.alt
+                    ? localize(article.image.alt, locale)
+                    : localize(article.title, locale)
+                }
+              />
             </div>
             <div className="ncard__body">
               <h3>{localize(article.title, locale)}</h3>

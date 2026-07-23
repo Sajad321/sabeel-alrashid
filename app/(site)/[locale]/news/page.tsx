@@ -5,13 +5,21 @@ import type { Locale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/page-hero";
 import { NewsBrowser } from "@/components/news-browser";
-import { getArticles } from "@/lib/sanity/data";
+import { getArticles, getPage } from "@/lib/sanity/data";
+import { pageHeroProps } from "@/lib/page-content";
+const heroFallback = {
+  eyebrow: { ar: "غرفة الأخبار", en: "Newsroom" },
+  title: { ar: "الأخبار والإعلام", en: "News & Media" },
+  description: { ar: "آخر ما لدى مجموعة سبيل الراشد.", en: "The latest from across the Sabeel Al-Rashid group." },
+  image: "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1900&q=75&auto=format&fit=crop",
+};
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const page = await getPage("newsPage");
   return pageMetadata(
     locale,
     "news",
@@ -19,7 +27,7 @@ export async function generateMetadata({
     {
       ar: "آخر أخبار مجموعة سبيل الراشد وعلاماتها.",
       en: "Latest news from Sabeel Al-Rashid and its brands.",
-    },
+    }, undefined, page?.seo,
   );
 }
 export default async function News({
@@ -30,19 +38,13 @@ export default async function News({
   const { locale } = await params;
   setRequestLocale(locale);
   const ar = locale === "ar";
-  const articles = await getArticles();
+  const [articles, page] = await Promise.all([getArticles(), getPage("newsPage")]);
+  const hero = pageHeroProps(page, locale, heroFallback);
   return (
     <>
       <PageHero
         locale={locale}
-        eyebrow={ar ? "غرفة الأخبار" : "Newsroom"}
-        title={ar ? "الأخبار والإعلام" : "News & Media"}
-        description={
-          ar
-            ? "آخر ما لدى مجموعة سبيل الراشد."
-            : "The latest from across the Sabeel Al-Rashid group."
-        }
-        image="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1900&q=75&auto=format&fit=crop"
+        {...hero}
       />
       <section className="section">
         <div className="container">

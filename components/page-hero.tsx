@@ -5,6 +5,7 @@ export function PageHero({
   title,
   description,
   image,
+  imageAlt,
   locale,
   parent,
 }: {
@@ -12,13 +13,14 @@ export function PageHero({
   title: string;
   description?: string;
   image: string;
+  imageAlt?: string;
   locale: "ar" | "en";
   parent?: { label: string; href: string };
 }) {
   return (
     <section className="page-hero">
       <div className="page-hero__media">
-        <img src={image} alt="" />
+        <img src={image} alt={imageAlt || ""} />
       </div>
       <div className="container page-hero__inner">
         <nav className="breadcrumb" aria-label={locale === "ar" ? "مسار الصفحة" : "Breadcrumb"}>

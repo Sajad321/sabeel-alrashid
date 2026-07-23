@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-const page = (name: string, title: string) =>
+
+const simplePage = (name: string, title: string, extraFields: ReturnType<typeof defineField>[] = []) =>
   defineType({
     name,
     title,
@@ -10,11 +11,8 @@ const page = (name: string, title: string) =>
         type: "localizedString",
         validation: (r) => r.required(),
       }),
-      defineField({
-        name: "sections",
-        type: "array",
-        of: [defineArrayMember({ type: "pageSection" })],
-      }),
+      defineField({ name: "hero", type: "pageHero" }),
+      ...extraFields,
       defineField({ name: "seo", type: "seo" }),
     ],
     preview: { select: { title: "title.en", subtitle: "title.ar" } },
@@ -34,6 +32,8 @@ export const siteSettings = defineType({
     defineField({ name: "email", type: "string" }),
     defineField({ name: "franchiseEmail", type: "string" }),
     defineField({ name: "careersEmail", type: "string" }),
+    defineField({ name: "secondaryPhone", type: "string" }),
+    defineField({ name: "workingHours", type: "localizedString" }),
     defineField({
       name: "socialLinks",
       type: "array",
@@ -80,15 +80,63 @@ export const homePage = defineType({
         }),
       ],
     }),
+    defineField({ name: "introduction", type: "contentBlock" }),
+    defineField({
+      name: "introductionFacts",
+      type: "array",
+      of: [defineArrayMember({ type: "stat" })],
+    }),
+    defineField({
+      name: "statistics",
+      type: "array",
+      of: [defineArrayMember({ type: "stat" })],
+    }),
+    defineField({ name: "divisionsHeading", type: "localizedString" }),
+    defineField({ name: "brandsHeading", type: "localizedString" }),
+    defineField({ name: "branchesHeading", type: "localizedString" }),
+    defineField({ name: "branchesDescription", type: "localizedText" }),
+    defineField({ name: "newsHeading", type: "localizedString" }),
+    defineField({ name: "brandFocusHeading", type: "localizedString" }),
+    defineField({ name: "sustainability", type: "contentBlock" }),
+    defineField({
+      name: "sustainabilityFacts",
+      type: "array",
+      of: [defineArrayMember({ type: "stat" })],
+    }),
     defineField({ name: "seo", type: "seo" }),
   ],
 });
-export const aboutPage = page("aboutPage", "About page");
-export const brandsPage = page("brandsPage", "Brands page");
-export const franchisePage = page("franchisePage", "Franchise page");
-export const careersPage = page("careersPage", "Careers page");
-export const contactPage = page("contactPage", "Contact page");
-export const applicationPage = page("applicationPage", "Application page");
+export const aboutPage = simplePage("aboutPage", "About page", [
+  defineField({ name: "introduction", type: "contentBlock" }),
+  defineField({ name: "statistics", type: "array", of: [defineArrayMember({ type: "stat" })] }),
+  defineField({ name: "historyHeading", type: "localizedString" }),
+  defineField({ name: "timeline", type: "array", of: [defineArrayMember({ type: "timelineItem" })] }),
+  defineField({ name: "vision", type: "contentBlock" }),
+  defineField({ name: "mission", type: "contentBlock" }),
+  defineField({ name: "teamHeading", type: "localizedString" }),
+]);
+export const brandsPage = simplePage("brandsPage", "Brands page");
+export const franchisePage = simplePage("franchisePage", "Franchise page", [
+  defineField({ name: "featuresHeading", type: "localizedString" }),
+  defineField({ name: "features", type: "array", of: [defineArrayMember({ type: "featureItem" })] }),
+  defineField({ name: "formHeading", type: "localizedString" }),
+  defineField({ name: "formDescription", type: "localizedText" }),
+]);
+export const careersPage = simplePage("careersPage", "Careers page", [
+  defineField({ name: "culture", type: "contentBlock" }),
+  defineField({ name: "cultureValues", type: "array", of: [defineArrayMember({ type: "localizedString" })] }),
+  defineField({ name: "benefitsHeading", type: "localizedString" }),
+  defineField({ name: "benefits", type: "array", of: [defineArrayMember({ type: "featureItem" })] }),
+  defineField({ name: "positionsHeading", type: "localizedString" }),
+  defineField({ name: "callToAction", type: "contentBlock" }),
+  defineField({ name: "callToActionLabel", type: "localizedString" }),
+]);
+export const contactPage = simplePage("contactPage", "Contact page", [
+  defineField({ name: "formHeading", type: "localizedString" }),
+  defineField({ name: "formDescription", type: "localizedText" }),
+]);
+export const applicationPage = simplePage("applicationPage", "Application page");
+export const newsPage = simplePage("newsPage", "News page");
 export const brand = defineType({
   name: "brand",
   title: "Brand",
@@ -113,7 +161,11 @@ export const brand = defineType({
       type: "image",
       validation: (r) => r.required(),
     }),
-    defineField({ name: "image", type: "imageWithAlt" }),
+    defineField({
+      name: "image",
+      type: "imageWithAlt",
+      validation: (r) => r.required(),
+    }),
     defineField({
       name: "gallery",
       title: "Moving image carousel",
@@ -143,7 +195,11 @@ export const division = defineType({
     }),
     defineField({ name: "slug", type: "slug", options: { source: "name.en" } }),
     defineField({ name: "description", type: "localizedText" }),
-    defineField({ name: "image", type: "imageWithAlt" }),
+    defineField({
+      name: "image",
+      type: "imageWithAlt",
+      validation: (r) => r.required(),
+    }),
     defineField({ name: "order", type: "number" }),
   ],
   preview: {
@@ -193,6 +249,7 @@ export const branch = defineType({
     defineField({ name: "phone", type: "string" }),
     defineField({ name: "hours", type: "localizedText" }),
     defineField({ name: "active", type: "boolean", initialValue: true }),
+    defineField({ name: "order", type: "number" }),
   ],
   preview: { select: { title: "district.en", subtitle: "district.ar" } },
 });
@@ -207,7 +264,11 @@ export const teamMember = defineType({
       validation: (r) => r.required(),
     }),
     defineField({ name: "role", type: "localizedString" }),
-    defineField({ name: "photo", type: "imageWithAlt" }),
+    defineField({
+      name: "photo",
+      type: "imageWithAlt",
+      validation: (r) => r.required(),
+    }),
     defineField({ name: "order", type: "number" }),
   ],
   preview: {

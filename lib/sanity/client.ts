@@ -9,6 +9,7 @@ export const sanityClient = projectId
       useCdn: true,
       token: process.env.SANITY_API_READ_TOKEN,
       perspective: "published",
+      stega: { studioUrl: "/studio" },
     })
   : null;
 export const sanityWriteClient =

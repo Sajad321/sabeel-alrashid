@@ -17,6 +17,7 @@ const common = [
     initialValue: "new",
   }),
   defineField({ name: "retentionUntil", type: "datetime", readOnly: true }),
+  defineField({ name: "anonymizedAt", type: "datetime", readOnly: true }),
   defineField({ name: "internalNotes", type: "text" }),
 ];
 export const contactSubmission = defineType({

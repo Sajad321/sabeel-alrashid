@@ -4,6 +4,7 @@ import { structureTool } from "sanity/structure";
 import { presentationTool } from "sanity/presentation";
 import { schemaTypes } from "@/sanity/schemaTypes";
 import { dataset, projectId } from "@/lib/sanity/env";
+import { AnonymizeSubmissionAction } from "@/sanity/submission-actions";
 
 export default defineConfig({
   name: "default",
@@ -33,6 +34,7 @@ export default defineConfig({
                         "careersPage",
                         "contactPage",
                         "applicationPage",
+                        "newsPage",
                       ] as const
                     ).map((type) =>
                       singleton(S, type.replace("Page", " page"), type),
@@ -51,6 +53,7 @@ export default defineConfig({
                   "careersPage",
                   "contactPage",
                   "applicationPage",
+                  "newsPage",
                 ].includes(item.getId() || ""),
             ),
           ]),
@@ -62,6 +65,14 @@ export default defineConfig({
       },
     }),
   ],
+  document: {
+    actions: (previous, context) =>
+      ["contactSubmission", "franchiseSubmission", "jobApplication"].includes(
+        context.schemaType,
+      )
+        ? [...previous, AnonymizeSubmissionAction]
+        : previous,
+  },
   schema: { types: schemaTypes },
 });
 function singleton(S: any, title: string, type: string) {
