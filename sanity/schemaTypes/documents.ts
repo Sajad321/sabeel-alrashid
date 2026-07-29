@@ -107,13 +107,46 @@ export const homePage = defineType({
   ],
 });
 export const aboutPage = simplePage("aboutPage", "About page", [
-  defineField({ name: "introduction", type: "contentBlock" }),
-  defineField({ name: "statistics", type: "array", of: [defineArrayMember({ type: "stat" })] }),
-  defineField({ name: "historyHeading", type: "localizedString" }),
-  defineField({ name: "timeline", type: "array", of: [defineArrayMember({ type: "timelineItem" })] }),
-  defineField({ name: "vision", type: "contentBlock" }),
-  defineField({ name: "mission", type: "contentBlock" }),
-  defineField({ name: "teamHeading", type: "localizedString" }),
+  defineField({
+    name: "introduction",
+    title: "Introduction / المقدمة",
+    type: "contentBlock",
+  }),
+  defineField({
+    name: "statistics",
+    title: "Company statistics / إحصائيات الشركة",
+    type: "array",
+    of: [defineArrayMember({ type: "stat" })],
+  }),
+  defineField({
+    name: "historyHeading",
+    title: "History heading / عنوان قصة الشركة",
+    type: "localizedString",
+  }),
+  defineField({
+    name: "timeline",
+    title: "Company history timeline / التسلسل الزمني",
+    description:
+      "Add, edit, delete, or drag items to reorder the company milestones.",
+    type: "array",
+    of: [defineArrayMember({ type: "timelineItem" })],
+    validation: (rule) => rule.min(1),
+  }),
+  defineField({
+    name: "vision",
+    title: "Vision / الرؤية",
+    type: "contentBlock",
+  }),
+  defineField({
+    name: "mission",
+    title: "Mission / الرسالة",
+    type: "contentBlock",
+  }),
+  defineField({
+    name: "teamHeading",
+    title: "Team heading / عنوان الفريق",
+    type: "localizedString",
+  }),
 ]);
 export const brandsPage = simplePage("brandsPage", "Brands page");
 export const franchisePage = simplePage("franchisePage", "Franchise page", [

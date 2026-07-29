@@ -139,9 +139,24 @@ export const timelineItem = defineType({
   title: "Timeline item",
   type: "object",
   fields: [
-    defineField({ name: "year", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "title", type: "localizedString" }),
-    defineField({ name: "description", type: "localizedText" }),
+    defineField({
+      name: "year",
+      title: "Year / السنة",
+      type: "string",
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "title",
+      title: "Milestone title / عنوان الحدث",
+      type: "localizedString",
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "description",
+      title: "Description / الوصف",
+      type: "localizedText",
+      validation: (r) => r.required(),
+    }),
   ],
   preview: { select: { title: "title.en", subtitle: "year" } },
 });

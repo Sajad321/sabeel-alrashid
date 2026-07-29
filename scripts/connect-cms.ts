@@ -293,6 +293,12 @@ const pages = {
 } as const;
 
 async function connectCms() {
+  const existingPages = await client.fetch<
+    Array<Record<string, unknown> & { _id: string }>
+  >(`*[_id in $ids]`, { ids: Object.keys(pages) });
+  const existingById = new Map(
+    existingPages.map((document) => [document._id, document]),
+  );
   const transaction = client.transaction();
   for (const [id, fields] of Object.entries(pages)) {
     const page = fields as typeof fields & {
@@ -309,9 +315,15 @@ async function connectCms() {
         noIndex: false,
       },
     };
+    const existing = existingById.get(id);
+    const nullOrMissingDefaults = Object.fromEntries(
+      Object.entries(defaults).filter(
+        ([field]) => existing?.[field] === null || existing?.[field] === undefined,
+      ),
+    );
     transaction
       .createIfNotExists({ _id: id, _type: id })
-      .patch(id, (patch) => patch.setIfMissing(defaults));
+      .patch(id, (patch) => patch.set(nullOrMissingDefaults));
   }
   transaction.patch("siteSettings", (patch) =>
     patch.setIfMissing({
