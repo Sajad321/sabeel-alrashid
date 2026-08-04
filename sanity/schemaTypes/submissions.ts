@@ -41,6 +41,22 @@ export const franchiseSubmission = defineType({
     defineField({ name: "investment", type: "string", readOnly: true }),
     defineField({ name: "brand", type: "string", readOnly: true }),
     defineField({ name: "message", type: "text", readOnly: true }),
+    defineField({
+      name: "customFields",
+      title: "Additional answers",
+      type: "array",
+      readOnly: true,
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "key", type: "string", readOnly: true }),
+            defineField({ name: "value", type: "text", readOnly: true }),
+          ],
+          preview: { select: { title: "key", subtitle: "value" } },
+        },
+      ],
+    }),
   ],
   preview: { select: { title: "name", subtitle: "city" } },
 });

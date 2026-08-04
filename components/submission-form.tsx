@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import type { Job } from "@/lib/types";
+import type { FranchiseFormField, Job } from "@/lib/types";
 import { localize } from "@/lib/types";
 import { Turnstile } from "./turnstile";
 
@@ -11,11 +11,13 @@ export function SubmissionForm({
   locale,
   jobs = [],
   defaultJob = "",
+  franchiseFields = [],
 }: {
   kind: Kind;
   locale: "ar" | "en";
   jobs?: Job[];
   defaultJob?: string;
+  franchiseFields?: FranchiseFormField[];
 }) {
   const t = useTranslations("forms"),
     c = useTranslations("common");
@@ -23,6 +25,41 @@ export function SubmissionForm({
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">(
     "idle",
   );
+  const defaultFranchiseFields: FranchiseFormField[] = [
+    { key: "name", label: { ar: "الاسم الكامل", en: "Full name" }, type: "text", required: true },
+    { key: "email", label: { ar: "البريد الإلكتروني", en: "Email" }, type: "email", required: true },
+    { key: "phone", label: { ar: "الهاتف", en: "Phone" }, type: "tel", required: true },
+    { key: "city", label: { ar: "الدولة / المدينة", en: "Country / City" }, type: "text", required: true },
+    {
+      key: "investment",
+      label: { ar: "الميزانية الاستثمارية", en: "Investment budget" },
+      type: "select",
+      options: ["$250k–$500k", "$500k–$1m", "$1m+"].map((value) => ({ ar: value, en: value })),
+    },
+    {
+      key: "brand",
+      label: { ar: "العلامة المفضلة", en: "Preferred brand" },
+      type: "select",
+      options: [
+        { ar: "سوبر تشيكن", en: "Super Chicken" },
+        { ar: "الركن الشرقي", en: "Alrukn Alsharqi" },
+        { ar: "أي علامة", en: "Any brand" },
+      ],
+    },
+    { key: "message", label: { ar: "رسالتك", en: "Message" }, type: "textarea", fullWidth: true },
+  ];
+  const mandatoryFranchiseKeys = new Set(["name", "email", "phone", "city"]);
+  const configuredFranchiseFields = franchiseFields.length
+    ? franchiseFields
+    : defaultFranchiseFields;
+  const resolvedFranchiseFields = [
+    ...configuredFranchiseFields,
+    ...defaultFranchiseFields.filter(
+      (fallback) =>
+        mandatoryFranchiseKeys.has(fallback.key) &&
+        !configuredFranchiseFields.some((field) => field.key === fallback.key),
+    ),
+  ];
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState("sending");
@@ -57,21 +94,25 @@ export function SubmissionForm({
       </div>
       <div className="form-grid">
         {kind === "job" && <FormSectionTitle>{locale === "ar" ? "المعلومات الشخصية" : "Personal information"}</FormSectionTitle>}
-        <Field label={t("name")} name="name" required />
-        <Field
-          label={t("email")}
-          name="email"
-          type="email"
-          dir="ltr"
-          required
-        />
-        <Field
-          label={t("phone")}
-          name="phone"
-          type="tel"
-          dir="ltr"
-          required={kind !== "contact"}
-        />
+        {kind !== "franchise" && (
+          <>
+            <Field label={t("name")} name="name" required />
+            <Field
+              label={t("email")}
+              name="email"
+              type="email"
+              dir="ltr"
+              required
+            />
+            <Field
+              label={t("phone")}
+              name="phone"
+              type="tel"
+              dir="ltr"
+              required={kind !== "contact"}
+            />
+          </>
+        )}
         {kind === "contact" && (
           <Select
             label={t("subject")}
@@ -85,21 +126,51 @@ export function SubmissionForm({
         )}{" "}
         {kind === "franchise" && (
           <>
-            <Field label={t("city")} name="city" required />
-            <Select
-              label={t("investment")}
-              name="investment"
-              options={["$250k–$500k", "$500k–$1m", "$1m+"]}
-            />
-            <Select
-              label={t("brand")}
-              name="brand"
-              options={
-                locale === "ar"
-                  ? ["سوبر تشيكن", "الركن الشرقي", "أي علامة"]
-                  : ["Super Chicken", "Alrukn Alsharqi", "Any brand"]
-              }
-            />
+            {resolvedFranchiseFields.map((field) => {
+              const systemField = defaultFranchiseFields.some(
+                (item) => item.key === field.key,
+              );
+              const name = systemField ? field.key : `custom__${field.key}`;
+              const label = localize(field.label, locale);
+              const required =
+                mandatoryFranchiseKeys.has(field.key) || field.required === true;
+              if (field.type === "select")
+                return (
+                  <Select
+                    key={field.key}
+                    label={label}
+                    name={name}
+                    options={(field.options || []).map((option) =>
+                      localize(option, locale),
+                    )}
+                    required={required}
+                    full={field.fullWidth}
+                  />
+                );
+              if (field.type === "textarea")
+                return (
+                  <TextArea
+                    key={field.key}
+                    label={label}
+                    name={name}
+                    placeholder={field.placeholder ? localize(field.placeholder, locale) : undefined}
+                    required={required}
+                    full={field.fullWidth !== false}
+                  />
+                );
+              return (
+                <Field
+                  key={field.key}
+                  label={label}
+                  name={name}
+                  type={field.type}
+                  placeholder={field.placeholder ? localize(field.placeholder, locale) : undefined}
+                  dir={field.type === "email" || field.type === "tel" ? "ltr" : undefined}
+                  required={required}
+                  full={field.fullWidth}
+                />
+              );
+            })}
           </>
         )}
         {kind === "job" && (
@@ -173,7 +244,7 @@ export function SubmissionForm({
             </div>
           </>
         )}
-        <div className="field field--full">
+        {kind !== "franchise" && <div className="field field--full">
           <label htmlFor={`${kind}-message`}>
             {kind === "job" ? t("note") : t("message")}
             {kind === "contact" && <span className="req"> *</span>}
@@ -183,7 +254,7 @@ export function SubmissionForm({
             name={kind === "job" ? "note" : "message"}
             required={kind === "contact"}
           />
-        </div>
+        </div>}
       </div>
       <Turnstile />
       <button
@@ -213,6 +284,7 @@ function Field({
   required = false,
   dir,
   full = false,
+  placeholder,
 }: {
   label: string;
   name: string;
@@ -220,6 +292,7 @@ function Field({
   required?: boolean;
   dir?: "ltr";
   full?: boolean;
+  placeholder?: string;
 }) {
   return (
     <div className={`field${full ? " field--full" : ""}`}>
@@ -227,7 +300,7 @@ function Field({
         {label}
         {required && <span className="req"> *</span>}
       </label>
-      <input id={name} name={name} type={type} required={required} dir={dir} />
+      <input id={name} name={name} type={type} required={required} dir={dir} placeholder={placeholder} />
     </div>
   );
 }
@@ -237,16 +310,18 @@ function Select({
   options,
   defaultValue,
   required = false,
+  full = false,
 }: {
   label: string;
   name: string;
   options: Array<string | { value: string; label: string }>;
   defaultValue?: string;
   required?: boolean;
+  full?: boolean;
 }) {
   return (
-    <div className="field">
-      <label htmlFor={name}>{label}</label>
+    <div className={`field${full ? " field--full" : ""}`}>
+      <label htmlFor={name}>{label}{required && <span className="req"> *</span>}</label>
       <select id={name} name={name} defaultValue={defaultValue} required={required}>
         {options.map((option) => {
           const item =
@@ -260,6 +335,30 @@ function Select({
           );
         })}
       </select>
+    </div>
+  );
+}
+
+function TextArea({
+  label,
+  name,
+  placeholder,
+  required = false,
+  full = true,
+}: {
+  label: string;
+  name: string;
+  placeholder?: string;
+  required?: boolean;
+  full?: boolean;
+}) {
+  return (
+    <div className={`field${full ? " field--full" : ""}`}>
+      <label htmlFor={name}>
+        {label}
+        {required && <span className="req"> *</span>}
+      </label>
+      <textarea id={name} name={name} placeholder={placeholder} required={required} />
     </div>
   );
 }

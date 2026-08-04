@@ -58,6 +58,9 @@ export const homePage = defineType({
     defineField({ name: "title", type: "localizedString" }),
     defineField({
       name: "heroSlides",
+      title: "Homepage carousel slides / صور العرض الرئيسية",
+      description:
+        "Upload, replace, add, remove, or drag slides to reorder the homepage carousel.",
       type: "array",
       validation: (r) => r.min(1).max(8),
       of: [
@@ -154,6 +157,23 @@ export const franchisePage = simplePage("franchisePage", "Franchise page", [
   defineField({ name: "features", type: "array", of: [defineArrayMember({ type: "featureItem" })] }),
   defineField({ name: "formHeading", type: "localizedString" }),
   defineField({ name: "formDescription", type: "localizedText" }),
+  defineField({
+    name: "formFields",
+    title: "Franchise form fields / حقول طلب الامتياز",
+    description:
+      "Edit labels and dropdown options, reorder fields, or add custom questions. Name, email, phone and city always remain required.",
+    type: "array",
+    of: [defineArrayMember({ type: "formFieldDefinition" })],
+    validation: (rule) =>
+      rule.max(20).custom((fields) => {
+        const keys = ((fields || []) as Array<{ key?: string }>)
+          .map((field) => field.key)
+          .filter(Boolean);
+        return new Set(keys).size === keys.length
+          ? true
+          : "Each form field key must be unique.";
+      }),
+  }),
 ]);
 export const careersPage = simplePage("careersPage", "Careers page", [
   defineField({ name: "culture", type: "contentBlock" }),

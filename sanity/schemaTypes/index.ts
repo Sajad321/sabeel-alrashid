@@ -9,6 +9,7 @@ import {
   contentBlock,
   featureItem,
   timelineItem,
+  formFieldDefinition,
 } from "./shared";
 import {
   siteSettings,
@@ -44,6 +45,7 @@ export const schemaTypes = [
   contentBlock,
   featureItem,
   timelineItem,
+  formFieldDefinition,
   siteSettings,
   homePage,
   aboutPage,

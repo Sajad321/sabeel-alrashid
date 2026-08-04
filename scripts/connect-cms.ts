@@ -25,6 +25,53 @@ const keyed = <T extends object>(items: T[], prefix: string) =>
     ...item,
   }));
 
+const carouselSlides = [
+  {
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1900&q=80&auto=format&fit=crop",
+    eyebrow: l("مجموعة سبيل الراشد", "Sabeel Al-Rashid Group"),
+    title: l("البيتُ خلف العلامات التي تُحبّها.", "The house behind the brands you love."),
+  },
+  {
+    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1900&q=80&auto=format&fit=crop",
+    eyebrow: l("منصّة استثمار", "An investment platform"),
+    title: l("نَبني روّاد الضيافة في العراق.", "Building Iraq's hospitality leaders."),
+  },
+  {
+    image: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1900&q=80&auto=format&fit=crop",
+    eyebrow: l("المقر · بغداد", "Headquarters · Baghdad"),
+    title: l("حضورٌ مؤسسيّ متنامٍ.", "A growing corporate footprint."),
+  },
+  {
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1900&q=80&auto=format&fit=crop",
+    eyebrow: l("العمليات والكوادر", "Operations & people"),
+    title: l("عملياتٌ منضبطة وقابلة للتوسّع.", "Disciplined, scalable operations."),
+  },
+  {
+    image: "https://images.unsplash.com/photo-1577412647305-991150c7d163?w=1900&q=80&auto=format&fit=crop",
+    eyebrow: l("توسّع", "Expansion"),
+    title: l("مواقعُ جديدة في عموم البلاد.", "New locations across the country."),
+  },
+];
+
+async function uploadCarouselImage(url: string, index: number) {
+  const filename = `homepage-carousel-${index + 1}.jpg`;
+  const existing = await client.fetch<string | null>(
+    `*[_type == "sanity.imageAsset" && originalFilename == $filename][0]._id`,
+    { filename },
+  );
+  const assetId = existing || (
+    await client.assets.upload(
+      "image",
+      Buffer.from(await (await fetch(url)).arrayBuffer()),
+      { filename },
+    )
+  )._id;
+  return {
+    _type: "image",
+    asset: { _type: "reference", _ref: assetId },
+  };
+}
+
 const pages = {
   homePage: {
     title: l("الرئيسية", "Home"),
@@ -196,6 +243,34 @@ const pages = {
       "حدّثنا عن نفسك وسنتواصل معك خلال خمسة أيام عمل.",
       "Tell us about yourself and we'll be in touch within five business days.",
     ),
+    formFields: keyed(
+      [
+        { _type: "formFieldDefinition", key: "name", label: l("الاسم الكامل", "Full name"), type: "text", required: true },
+        { _type: "formFieldDefinition", key: "email", label: l("البريد الإلكتروني", "Email"), type: "email", required: true },
+        { _type: "formFieldDefinition", key: "phone", label: l("الهاتف", "Phone"), type: "tel", required: true },
+        { _type: "formFieldDefinition", key: "city", label: l("الدولة / المدينة", "Country / City"), type: "text", required: true },
+        {
+          _type: "formFieldDefinition",
+          key: "investment",
+          label: l("الميزانية الاستثمارية", "Investment budget"),
+          type: "select",
+          options: keyed(["$250k–$500k", "$500k–$1m", "$1m+"].map((value) => l(value, value)), "investment-option"),
+        },
+        {
+          _type: "formFieldDefinition",
+          key: "brand",
+          label: l("العلامة المفضلة", "Preferred brand"),
+          type: "select",
+          options: keyed([
+            l("سوبر تشيكن", "Super Chicken"),
+            l("الركن الشرقي", "Alrukn Alsharqi"),
+            l("أي علامة", "Any brand"),
+          ], "brand-option"),
+        },
+        { _type: "formFieldDefinition", key: "message", label: l("رسالتك", "Message"), type: "textarea", fullWidth: true },
+      ],
+      "franchise-field",
+    ),
   },
   careersPage: {
     title: l("الوظائف", "Careers"),
@@ -335,6 +410,23 @@ async function connectCms() {
     }),
   );
   await transaction.commit();
+  const currentHome = existingById.get("homePage");
+  if (!Array.isArray(currentHome?.heroSlides) || !currentHome.heroSlides.length) {
+    const heroSlides = [];
+    for (const [index, slide] of carouselSlides.entries()) {
+      heroSlides.push({
+        _key: `hero-slide-${index}`,
+        _type: "object",
+        eyebrow: slide.eyebrow,
+        title: slide.title,
+        image: {
+          ...(await uploadCarouselImage(slide.image, index)),
+          alt: slide.title,
+        },
+      });
+    }
+    await client.patch("homePage").set({ heroSlides }).commit();
+  }
   console.log("CMS fields connected without overwriting existing editor content.");
 }
 

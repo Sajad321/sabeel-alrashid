@@ -116,7 +116,11 @@ export default async function Franchise({
                 : "Tell us about yourself and we'll be in touch within five business days."}
             </p>
           </Reveal>
-          <SubmissionForm kind="franchise" locale={locale} />
+          <SubmissionForm
+            kind="franchise"
+            locale={locale}
+            franchiseFields={page?.formFields}
+          />
         </div>
       </section>
     </>

@@ -28,6 +28,15 @@ export type FeatureItem = {
   title: LocalizedString;
   description: LocalizedText;
 };
+export type FranchiseFormField = {
+  key: string;
+  label: LocalizedString;
+  type: "text" | "email" | "tel" | "number" | "select" | "textarea";
+  placeholder?: LocalizedString;
+  options?: LocalizedString[];
+  required?: boolean;
+  fullWidth?: boolean;
+};
 export type PageDocument = {
   title?: LocalizedString;
   hero?: PageHeroContent;
@@ -47,6 +56,7 @@ export type PageDocument = {
   features?: FeatureItem[];
   formHeading?: LocalizedString;
   formDescription?: LocalizedText;
+  formFields?: FranchiseFormField[];
   culture?: ContentBlock;
   cultureValues?: LocalizedString[];
   benefitsHeading?: LocalizedString;

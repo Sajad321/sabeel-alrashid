@@ -160,3 +160,81 @@ export const timelineItem = defineType({
   ],
   preview: { select: { title: "title.en", subtitle: "year" } },
 });
+export const formFieldDefinition = defineType({
+  name: "formFieldDefinition",
+  title: "Form field",
+  type: "object",
+  fields: [
+    defineField({
+      name: "key",
+      title: "Field key / رمز الحقل",
+      description:
+        "Use English letters, numbers and underscores only. Existing keys connect to their saved submission fields.",
+      type: "string",
+      validation: (rule) =>
+        rule
+          .required()
+          .regex(/^[a-z][a-z0-9_]*$/, {
+            name: "a lowercase key such as company_name",
+          }),
+    }),
+    defineField({
+      name: "label",
+      title: "Label / عنوان الحقل",
+      type: "localizedString",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "type",
+      title: "Field type / نوع الحقل",
+      type: "string",
+      options: {
+        list: [
+          { title: "Short text", value: "text" },
+          { title: "Email", value: "email" },
+          { title: "Phone", value: "tel" },
+          { title: "Number", value: "number" },
+          { title: "Dropdown", value: "select" },
+          { title: "Long text", value: "textarea" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "text",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "placeholder",
+      title: "Placeholder / النص التوضيحي",
+      type: "localizedString",
+    }),
+    defineField({
+      name: "options",
+      title: "Dropdown options / خيارات القائمة",
+      type: "array",
+      of: [defineArrayMember({ type: "localizedString" })],
+      hidden: ({ parent }) => parent?.type !== "select",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as { type?: string } | undefined;
+          return parent?.type !== "select" || (value?.length || 0) > 0
+            ? true
+            : "Add at least one dropdown option.";
+        }),
+    }),
+    defineField({
+      name: "required",
+      title: "Required / إلزامي",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "fullWidth",
+      title: "Full width / عرض كامل",
+      type: "boolean",
+      initialValue: false,
+    }),
+  ],
+  preview: {
+    select: { title: "label.en", subtitle: "key" },
+  },
+});
