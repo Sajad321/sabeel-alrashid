@@ -1,11 +1,11 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { LocalizedString } from "@/lib/types";
+import { localize, type LocalizedString } from "@/lib/types";
 
 type Slide = {
   image: string | { src: string; alt?: LocalizedString };
-  eyebrow: LocalizedString;
-  title: LocalizedString;
+  eyebrow?: LocalizedString | null;
+  title: LocalizedString | null;
 };
 export function HeroCarousel({
   slides,
@@ -60,13 +60,15 @@ export function HeroCarousel({
                 alt={
                   typeof slide.image === "string"
                     ? ""
-                    : slide.image.alt?.[locale] || ""
+                    : localize(slide.image.alt, locale)
                 }
                 fetchPriority={i === 0 ? "high" : "auto"}
               />
               <div className="carousel__cap">
-                <span className="k">{slide.eyebrow[locale]}</span>
-                <div className="ttl">{slide.title[locale]}</div>
+                {localize(slide.eyebrow, locale) && (
+                  <span className="k">{localize(slide.eyebrow, locale)}</span>
+                )}
+                <div className="ttl">{localize(slide.title, locale)}</div>
               </div>
             </div>
           ))}

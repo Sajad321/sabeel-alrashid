@@ -65,8 +65,10 @@ export type PageDocument = {
   callToAction?: ContentBlock;
   callToActionLabel?: LocalizedString;
 };
-export const localize = (value: LocalizedString, locale: Locale) =>
-  value[locale] || value.ar;
+export const localize = (
+  value: Partial<LocalizedString> | null | undefined,
+  locale: Locale,
+) => value?.[locale] || value?.[locale === "ar" ? "en" : "ar"] || "";
 
 export type Brand = {
   slug: string;
