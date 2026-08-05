@@ -193,9 +193,19 @@ export default async function Careers({
       <section className="section section--soft section-anchor" id="positions">
         <div className="container">
           <div className="sec-head">
-            <h2 className="h2">{page?.positionsHeading ? localize(page.positionsHeading, locale) : ar ? "الوظائف الشاغرة" : "Open positions"}</h2>
+            <h2 className="h2">
+              {jobs.length > 0
+                ? page?.positionsHeading
+                  ? localize(page.positionsHeading, locale)
+                  : ar
+                    ? "الوظائف الشاغرة"
+                    : "Open positions"
+                : ar
+                  ? "لا توجد وظائف حاليا"
+                  : "No jobs are currently available"}
+            </h2>
           </div>
-          <JobsAccordion jobs={jobs} locale={locale} />
+          {jobs.length > 0 && <JobsAccordion jobs={jobs} locale={locale} />}
         </div>
       </section>
       <section className="section section--panel" id="apply">
