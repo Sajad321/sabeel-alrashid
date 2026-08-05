@@ -16,6 +16,8 @@ import { localize } from "@/lib/types";
 import { pageMetadata } from "@/lib/metadata";
 import type { Locale } from "@/i18n/routing";
 
+export const dynamic = "force-dynamic";
+
 const slides = [
   {
     image:

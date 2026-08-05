@@ -104,8 +104,23 @@ export async function getBrands(): Promise<CmsBrand[]> {
             },
   }));
 }
-export const getBranches = () =>
-  fetchData<Branch[]>(BRANCHES_QUERY, "branch", fallbackBranches as Branch[]);
+export async function getBranches(): Promise<Branch[]> {
+  if (!sanityClient) return fallbackBranches as Branch[];
+
+  try {
+    return await sanityClient.withConfig({ useCdn: false }).fetch<Branch[]>(
+      BRANCHES_QUERY,
+      {},
+      {
+        cache: "no-store",
+        perspective: "published",
+      },
+    );
+  } catch {
+    console.error("Failed to load published branches from Sanity.");
+    return [];
+  }
+}
 export const getJobs = () =>
   fetchData<Job[]>(JOBS_QUERY, "job", fallbackJobs as Job[]);
 export async function getDivisions() {
