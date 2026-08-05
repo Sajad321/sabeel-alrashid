@@ -25,3 +25,12 @@ test("job query preselects the application role", async ({ page }) => {
     "marketing-specialist",
   );
 });
+test("branch pins link to their Google Maps coordinates", async ({ page }) => {
+  await page.goto("/en");
+  const firstPin = page.locator(".gpin").first();
+  await expect(firstPin).toHaveAttribute("target", "_blank");
+  await expect(firstPin).toHaveAttribute(
+    "href",
+    /google\.com\/maps\/dir\/\?api=1&destination=-?\d+(\.\d+)?,-?\d+(\.\d+)?/,
+  );
+});

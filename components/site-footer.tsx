@@ -50,7 +50,6 @@ export function SiteFooter({
             links={[
               ["/franchise", n("franchise")],
               ["/careers", n("careers")],
-              ["/careers/apply", c("apply")],
             ]}
           />
           <FooterCol

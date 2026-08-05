@@ -25,19 +25,24 @@ export function BranchMap({
         <div className="bmap__pins">
           {branches.map((branch, i) => {
             const brand = brandFor(branch.brand);
+            const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${branch.lat},${branch.lng}`;
             return (
-              <button
+              <a
                 key={branch.slug}
                 className={`gpin gpin--${branch.brand === "super-chicken" ? "sc" : "ar"} ${active === i ? "act" : ""}`}
                 style={{ left: `${branch.x}%`, top: `${branch.y}%` }}
+                href={directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
                 aria-label={`${localize(brand.name, locale)} — ${localize(branch.district, locale)}`}
               >
                 <span className="gpin__num">
                   <img src={brand.logo} alt="" />
                 </span>
-              </button>
+              </a>
             );
           })}
         </div>
@@ -74,8 +79,8 @@ export function BranchMap({
           </h3>
           <p className="bpanel__sub">
             {locale === "ar"
-              ? "اضغط على علامة لعرض التفاصيل."
-              : "Select a pin for details."}
+              ? "اضغط على علامة لفتح الاتجاهات في خرائط Google."
+              : "Select a pin to open directions in Google Maps."}
           </p>
         </div>
         <div className="bpanel__list">
