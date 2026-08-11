@@ -21,9 +21,6 @@ export function SubmissionForm({
 }) {
   const t = useTranslations("forms"),
     c = useTranslations("common");
-  const turnstileConfigured = Boolean(
-    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-  );
   const ref = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">(
     "idle",
@@ -262,15 +259,10 @@ export function SubmissionForm({
       <Turnstile action={`submission-${kind}`} />
       <button
         className="btn btn--gold submit-btn"
-        disabled={state === "sending" || !turnstileConfigured}
+        disabled={state === "sending"}
       >
         {state === "sending" ? c("sending") : c("send")}
       </button>
-      {!turnstileConfigured && (
-        <p role="alert" className="form-status form-status--error">
-          {c("unavailable")}
-        </p>
-      )}
       {state === "success" && (
         <p role="status" className="form-status form-status--ok">
           {c("success")}

@@ -10,3 +10,5 @@ sanity-typegen.json
 schema.json
 *.tsbuildinfo
 .DS_Store
+tmp
+output

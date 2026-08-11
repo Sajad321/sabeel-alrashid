@@ -19,7 +19,9 @@ export async function verifyTurnstile(
   expectedAction: string,
 ) {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return false;
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  if (!secret && !siteKey) return true;
+  if (!secret || !siteKey) return false;
   if (!token) return false;
   const body = new URLSearchParams({
     secret,

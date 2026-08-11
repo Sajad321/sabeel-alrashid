@@ -13,15 +13,12 @@ const required = [
   "NEXT_PUBLIC_SANITY_DATASET",
   "SANITY_API_READ_TOKEN",
   "SANITY_API_WRITE_TOKEN",
-  "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
-  "TURNSTILE_SECRET_KEY",
   "SANITY_REVALIDATE_SECRET",
   "CRON_SECRET",
-  "CV_SCAN_ENDPOINT",
-  "CV_SCAN_TOKEN",
 ];
 
 const failures = [];
+const warnings = [];
 for (const name of required) {
   if (!process.env[name]) failures.push(`${name} is missing.`);
 }
@@ -33,8 +30,26 @@ if ((process.env.SANITY_REVALIDATE_SECRET || "").length < 32)
   failures.push("SANITY_REVALIDATE_SECRET must contain at least 32 characters.");
 if ((process.env.CRON_SECRET || "").length < 32)
   failures.push("CRON_SECRET must contain at least 32 characters.");
-if (!(process.env.CV_SCAN_ENDPOINT || "").startsWith("https://"))
+const scanEndpoint = process.env.CV_SCAN_ENDPOINT || "";
+const scanToken = process.env.CV_SCAN_TOKEN || "";
+const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
+const turnstileSecret = process.env.TURNSTILE_SECRET_KEY || "";
+if (Boolean(turnstileSiteKey) !== Boolean(turnstileSecret))
+  failures.push(
+    "NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY must be configured together.",
+  );
+if (!turnstileSiteKey && !turnstileSecret)
+  warnings.push(
+    "Turnstile is not configured. Submission forms will remain available without a bot challenge under the documented temporary risk exception.",
+  );
+if (Boolean(scanEndpoint) !== Boolean(scanToken))
+  failures.push("CV_SCAN_ENDPOINT and CV_SCAN_TOKEN must be configured together.");
+if (scanEndpoint && !scanEndpoint.startsWith("https://"))
   failures.push("CV_SCAN_ENDPOINT must be an HTTPS malware-scanning endpoint.");
+if (!scanEndpoint && !scanToken)
+  warnings.push(
+    "CV scanning is not configured. CV uploads will be accepted without malware scanning under the documented temporary risk exception.",
+  );
 
 if (
   process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
@@ -59,6 +74,8 @@ if (
     failures.push("Sanity dataset visibility could not be verified.");
   }
 }
+
+for (const warning of warnings) console.warn(`Security warning: ${warning}`);
 
 if (failures.length) {
   console.error("Security configuration check failed:");

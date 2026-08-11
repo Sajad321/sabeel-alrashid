@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { validatedCvBuffer } from "@/lib/file-validation";
+import { scanCvBuffer, validatedCvBuffer } from "@/lib/file-validation";
 
 const MAX = 4 * 1024 * 1024;
 
@@ -53,6 +53,28 @@ describe("CV file validation", () => {
       { type: "application/pdf" },
     );
     expect(await validatedCvBuffer(file, MAX)).toBeNull();
+  });
+
+  it("records an unscanned upload when no scanner is configured", async () => {
+    const previousEndpoint = process.env.CV_SCAN_ENDPOINT;
+    const previousToken = process.env.CV_SCAN_TOKEN;
+    delete process.env.CV_SCAN_ENDPOINT;
+    delete process.env.CV_SCAN_TOKEN;
+
+    const file = new File([Buffer.from("valid")], "resume.pdf", {
+      type: "application/pdf",
+    });
+
+    try {
+      expect(await scanCvBuffer(file, Buffer.from("valid"))).toBe(
+        "notConfigured",
+      );
+    } finally {
+      if (previousEndpoint === undefined) delete process.env.CV_SCAN_ENDPOINT;
+      else process.env.CV_SCAN_ENDPOINT = previousEndpoint;
+      if (previousToken === undefined) delete process.env.CV_SCAN_TOKEN;
+      else process.env.CV_SCAN_TOKEN = previousToken;
+    }
   });
 });
 

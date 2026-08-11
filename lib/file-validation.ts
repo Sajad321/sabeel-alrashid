@@ -26,10 +26,16 @@ export async function validatedCvBuffer(file: File, maxBytes: number) {
   return null;
 }
 
-export async function scanCvBuffer(file: File, buffer: Buffer) {
+export type CvScanStatus = "clean" | "notConfigured" | "rejected";
+
+export async function scanCvBuffer(
+  file: File,
+  buffer: Buffer,
+): Promise<CvScanStatus> {
   const endpoint = process.env.CV_SCAN_ENDPOINT;
   const token = process.env.CV_SCAN_TOKEN;
-  if (!endpoint?.startsWith("https://") || !token) return false;
+  if (!endpoint && !token) return "notConfigured";
+  if (!endpoint?.startsWith("https://") || !token) return "rejected";
 
   try {
     const response = await fetch(endpoint, {
@@ -44,11 +50,11 @@ export async function scanCvBuffer(file: File, buffer: Buffer) {
       cache: "no-store",
       signal: AbortSignal.timeout(15_000),
     });
-    if (!response.ok) return false;
+    if (!response.ok) return "rejected";
     const result = (await response.json()) as { clean?: boolean };
-    return result.clean === true;
+    return result.clean === true ? "clean" : "rejected";
   } catch {
-    return false;
+    return "rejected";
   }
 }
 

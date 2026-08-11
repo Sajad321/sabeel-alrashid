@@ -80,6 +80,18 @@ export const jobApplication = defineType({
     defineField({ name: "experience", type: "string", readOnly: true }),
     defineField({ name: "employer", type: "string", readOnly: true }),
     defineField({ name: "note", type: "text", readOnly: true }),
+    defineField({
+      name: "cvScanStatus",
+      title: "CV scan status",
+      type: "string",
+      readOnly: true,
+      options: {
+        list: [
+          { title: "Clean", value: "clean" },
+          { title: "Not configured", value: "notConfigured" },
+        ],
+      },
+    }),
     defineField({ name: "cv", type: "file", readOnly: true }),
   ],
   preview: { select: { title: "name", subtitle: "job" } },

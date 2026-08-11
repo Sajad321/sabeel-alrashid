@@ -35,7 +35,8 @@ export async function POST(request: NextRequest) {
     const buffer = await validatedCvBuffer(file, MAX);
     if (!buffer)
       return NextResponse.json({ error: "INVALID_FILE" }, { status: 400 });
-    if (!(await scanCvBuffer(file, buffer)))
+    const cvScanStatus = await scanCvBuffer(file, buffer);
+    if (cvScanStatus === "rejected")
       return NextResponse.json({ error: "FILE_SCAN_FAILED" }, { status: 503 });
     if (!sanityWriteClient)
       return NextResponse.json({ error: "SERVICE_UNAVAILABLE" }, { status: 503 });
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest) {
       "jobApplication",
       {
         ...parsed.data,
+        cvScanStatus,
         cv: { _type: "file", asset: { _type: "reference", _ref: asset._id } },
       },
       `Job application — ${parsed.data.job}`,
