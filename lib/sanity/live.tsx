@@ -5,7 +5,7 @@ const live = sanityClient
   ? defineLive({
       client: sanityClient,
       serverToken: process.env.SANITY_API_READ_TOKEN,
-      browserToken: process.env.SANITY_API_READ_TOKEN,
+      browserToken: false,
     })
   : null;
 

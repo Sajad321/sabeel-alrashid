@@ -33,6 +33,7 @@ import {
   contactSubmission,
   franchiseSubmission,
   jobApplication,
+  rateLimitBucket,
 } from "./submissions";
 export const schemaTypes = [
   localizedString,
@@ -65,4 +66,5 @@ export const schemaTypes = [
   contactSubmission,
   franchiseSubmission,
   jobApplication,
+  rateLimitBucket,
 ];

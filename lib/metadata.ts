@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/i18n/routing";
 import type { SeoFields } from "@/lib/types";
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+const configuredSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+  process.env.VERCEL_URL;
+const siteUrl = configuredSiteUrl
+  ? `${configuredSiteUrl.startsWith("http") ? "" : "https://"}${configuredSiteUrl}`.replace(
+      /\/$/,
+      "",
+    )
+  : "http://localhost:3000";
 export function pageMetadata(
   locale: Locale,
   path: string,

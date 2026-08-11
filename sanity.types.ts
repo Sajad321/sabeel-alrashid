@@ -15,6 +15,16 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type RateLimitBucket = {
+  _id: string;
+  _type: "rateLimitBucket";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  count?: number;
+  expiresAt?: string;
+};
+
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -36,6 +46,8 @@ export type JobApplication = {
   status?: "new" | "inProgress" | "closed";
   retentionUntil?: string;
   anonymizedAt?: string;
+  pendingAssetDeletion?: string;
+  retentionError?: string;
   internalNotes?: string;
   job?: string;
   birthDate?: string;
@@ -70,6 +82,8 @@ export type FranchiseSubmission = {
   status?: "new" | "inProgress" | "closed";
   retentionUntil?: string;
   anonymizedAt?: string;
+  pendingAssetDeletion?: string;
+  retentionError?: string;
   internalNotes?: string;
   city?: string;
   investment?: string;
@@ -96,6 +110,8 @@ export type ContactSubmission = {
   status?: "new" | "inProgress" | "closed";
   retentionUntil?: string;
   anonymizedAt?: string;
+  pendingAssetDeletion?: string;
+  retentionError?: string;
   internalNotes?: string;
   subject?: string;
   message?: string;
@@ -673,6 +689,7 @@ export type SanityImageAsset = {
 };
 
 export type AllSanitySchemaTypes =
+  | RateLimitBucket
   | SanityFileAssetReference
   | JobApplication
   | FranchiseSubmission

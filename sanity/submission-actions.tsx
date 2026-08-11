@@ -8,12 +8,19 @@ const personalFields = [
   "name",
   "email",
   "phone",
+  "subject",
   "message",
   "city",
+  "investment",
+  "brand",
+  "customFields",
+  "job",
   "birthDate",
   "gender",
   "maritalStatus",
   "address",
+  "preferredBrand",
+  "startDate",
   "salary",
   "education",
   "experience",
@@ -50,17 +57,33 @@ export const AnonymizeSubmissionAction: DocumentActionComponent = ({
             | { asset?: { _ref?: string } }
             | undefined
         )?.asset?._ref;
+        const values: Record<string, unknown> = {
+          status: "closed",
+          internalNotes: "Personal data removed under the retention policy.",
+        };
+        if (assetId) values.pendingAssetDeletion = assetId;
         await client
           .patch(id)
           .unset(personalFields)
-          .set({
-            anonymizedAt: new Date().toISOString(),
-            status: "closed",
-            internalNotes: "Personal data removed under the retention policy.",
-          })
+          .set(values)
+          .unset(["retentionError"])
           .commit();
-        if (assetId) await client.delete(assetId).catch(() => undefined);
+        if (assetId) await client.delete(assetId);
+        await client
+          .patch(id)
+          .set({ anonymizedAt: new Date().toISOString() })
+          .unset(["pendingAssetDeletion", "retentionError"])
+          .commit();
         onComplete();
+      } catch {
+        await client
+          .patch(id)
+          .set({ retentionError: "Cleanup failed; retry required." })
+          .commit()
+          .catch(() => undefined);
+        window.alert(
+          "Personal fields were removed, but file cleanup failed. The retention job will retry.",
+        );
       } finally {
         setWorking(false);
       }

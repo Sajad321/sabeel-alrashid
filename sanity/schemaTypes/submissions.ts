@@ -18,6 +18,8 @@ const common = [
   }),
   defineField({ name: "retentionUntil", type: "datetime", readOnly: true }),
   defineField({ name: "anonymizedAt", type: "datetime", readOnly: true }),
+  defineField({ name: "pendingAssetDeletion", type: "string", readOnly: true, hidden: true }),
+  defineField({ name: "retentionError", type: "string", readOnly: true }),
   defineField({ name: "internalNotes", type: "text" }),
 ];
 export const contactSubmission = defineType({
@@ -81,4 +83,15 @@ export const jobApplication = defineType({
     defineField({ name: "cv", type: "file", readOnly: true }),
   ],
   preview: { select: { title: "name", subtitle: "job" } },
+});
+
+export const rateLimitBucket = defineType({
+  name: "rateLimitBucket",
+  title: "Rate limit bucket",
+  type: "document",
+  hidden: true,
+  fields: [
+    defineField({ name: "count", type: "number", readOnly: true }),
+    defineField({ name: "expiresAt", type: "datetime", readOnly: true }),
+  ],
 });

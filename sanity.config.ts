@@ -6,6 +6,10 @@ import { schemaTypes } from "@/sanity/schemaTypes";
 import { dataset, projectId } from "@/lib/sanity/env";
 import { AnonymizeSubmissionAction } from "@/sanity/submission-actions";
 
+const previewOrigin =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
+
 export default defineConfig({
   name: "default",
   title: "Sabeel Al-Rashid",
@@ -60,7 +64,7 @@ export default defineConfig({
     }),
     presentationTool({
       previewUrl: {
-        origin: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+        origin: previewOrigin,
         previewMode: { enable: "/api/draft-mode/enable" },
       },
     }),
