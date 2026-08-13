@@ -121,13 +121,6 @@ export const DEFAULT_JOB_FORM_FIELDS: JobFormField[] = [
     type: "text",
   },
   {
-    key: "cv",
-    label: localized("السيرة الذاتية", "CV"),
-    type: "file",
-    required: true,
-    fullWidth: true,
-  },
-  {
     key: "note",
     label: localized("ملاحظات", "Notes"),
     type: "textarea",
