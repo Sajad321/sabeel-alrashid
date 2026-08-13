@@ -46,10 +46,6 @@ if (Boolean(scanEndpoint) !== Boolean(scanToken))
   failures.push("CV_SCAN_ENDPOINT and CV_SCAN_TOKEN must be configured together.");
 if (scanEndpoint && !scanEndpoint.startsWith("https://"))
   failures.push("CV_SCAN_ENDPOINT must be an HTTPS malware-scanning endpoint.");
-if (!scanEndpoint && !scanToken)
-  warnings.push(
-    "CV scanning is not configured. CV uploads will be accepted without malware scanning under the documented temporary risk exception.",
-  );
 
 if (
   process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
