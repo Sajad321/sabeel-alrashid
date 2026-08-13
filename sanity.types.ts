@@ -61,6 +61,12 @@ export type JobApplication = {
   experience?: string;
   employer?: string;
   note?: string;
+  customFields?: Array<{
+    key?: string;
+    value?: string;
+    _key: string;
+  }>;
+  cvScanStatus?: "clean" | "notConfigured";
   cv?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
@@ -392,6 +398,11 @@ export type ApplicationPage = {
   _rev: string;
   title?: LocalizedString;
   hero?: PageHero;
+  jobFormFields?: Array<
+    {
+      _key: string;
+    } & JobFormFieldDefinition
+  >;
   seo?: Seo;
 };
 
@@ -563,6 +574,32 @@ export type SiteSettings = {
   defaultSeo?: Seo;
 };
 
+export type JobFormFieldDefinition = {
+  _type: "jobFormFieldDefinition";
+  key?: string;
+  label?: LocalizedString;
+  type?:
+    | "section"
+    | "text"
+    | "email"
+    | "tel"
+    | "number"
+    | "date"
+    | "url"
+    | "select"
+    | "jobSelect"
+    | "textarea"
+    | "file";
+  placeholder?: LocalizedString;
+  options?: Array<
+    {
+      _key: string;
+    } & LocalizedString
+  >;
+  required?: boolean;
+  fullWidth?: boolean;
+};
+
 export type FormFieldDefinition = {
   _type: "formFieldDefinition";
   key?: string;
@@ -724,6 +761,7 @@ export type AllSanitySchemaTypes =
   | AboutPage
   | HomePage
   | SiteSettings
+  | JobFormFieldDefinition
   | FormFieldDefinition
   | TimelineItem
   | FeatureItem

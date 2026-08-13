@@ -37,6 +37,26 @@ export type FranchiseFormField = {
   required?: boolean;
   fullWidth?: boolean;
 };
+export type JobFormField = {
+  key: string;
+  label: LocalizedString;
+  type:
+    | "text"
+    | "email"
+    | "tel"
+    | "number"
+    | "date"
+    | "url"
+    | "select"
+    | "textarea"
+    | "jobSelect"
+    | "file"
+    | "section";
+  placeholder?: LocalizedString;
+  options?: LocalizedString[];
+  required?: boolean;
+  fullWidth?: boolean;
+};
 export type PageDocument = {
   title?: LocalizedString;
   hero?: PageHeroContent;
@@ -57,6 +77,7 @@ export type PageDocument = {
   formHeading?: LocalizedString;
   formDescription?: LocalizedText;
   formFields?: FranchiseFormField[];
+  jobFormFields?: JobFormField[];
   culture?: ContentBlock;
   cultureValues?: LocalizedString[];
   benefitsHeading?: LocalizedString;

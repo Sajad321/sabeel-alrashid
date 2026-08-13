@@ -51,6 +51,7 @@ export default async function Apply({
           locale={locale}
           jobs={jobs}
           defaultJob={jobs.some((j) => j.slug === job) ? job : ""}
+          jobFields={page?.jobFormFields}
         />
       </div>
     </section>

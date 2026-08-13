@@ -188,7 +188,42 @@ export const contactPage = simplePage("contactPage", "Contact page", [
   defineField({ name: "formHeading", type: "localizedString" }),
   defineField({ name: "formDescription", type: "localizedText" }),
 ]);
-export const applicationPage = simplePage("applicationPage", "Application page");
+export const applicationPage = simplePage("applicationPage", "Application page", [
+  defineField({
+    name: "jobFormFields",
+    title: "Job application fields / حقول طلب التوظيف",
+    description:
+      "Add, remove, edit, and drag fields to reorder them. Remove the field with key 'cv' if applicants should not upload a CV. Keep at least one contact field and the job field.",
+    type: "array",
+    of: [defineArrayMember({ type: "jobFormFieldDefinition" })],
+    validation: (rule) =>
+      rule.max(30).custom((fields) => {
+        const entries = (fields || []) as Array<{
+          key?: string;
+          type?: string;
+        }>;
+        const keys = entries.map((field) => field.key).filter(Boolean);
+        if (new Set(keys).size !== keys.length)
+          return "Each job form field key must be unique.";
+        if (entries.some((field) => field.type === "file" && field.key !== "cv"))
+          return "The CV file field must use the key 'cv'.";
+        if (entries.some((field) => field.key === "cv" && field.type !== "file"))
+          return "The field with key 'cv' must use the CV file type.";
+        if (entries.some((field) => field.type === "jobSelect" && field.key !== "job"))
+          return "The published jobs dropdown must use the key 'job'.";
+        if (entries.some((field) => field.key === "job" && field.type !== "jobSelect"))
+          return "The field with key 'job' must use the published jobs dropdown type.";
+        const inputKeys = entries
+          .filter((field) => field.type !== "section")
+          .map((field) => field.key);
+        if (!inputKeys.includes("job"))
+          return "Keep the field with key 'job' so applications stay connected to a vacancy.";
+        if (!inputKeys.some((key) => ["name", "email", "phone"].includes(key || "")))
+          return "Keep at least one contact field: name, email, or phone.";
+        return true;
+      }),
+  }),
+]);
 export const newsPage = simplePage("newsPage", "News page");
 export const brand = defineType({
   name: "brand",

@@ -81,6 +81,22 @@ export const jobApplication = defineType({
     defineField({ name: "employer", type: "string", readOnly: true }),
     defineField({ name: "note", type: "text", readOnly: true }),
     defineField({
+      name: "customFields",
+      title: "Additional answers",
+      type: "array",
+      readOnly: true,
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "key", type: "string", readOnly: true }),
+            defineField({ name: "value", type: "text", readOnly: true }),
+          ],
+          preview: { select: { title: "key", subtitle: "value" } },
+        },
+      ],
+    }),
+    defineField({
       name: "cvScanStatus",
       title: "CV scan status",
       type: "string",

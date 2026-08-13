@@ -238,3 +238,90 @@ export const formFieldDefinition = defineType({
     select: { title: "label.en", subtitle: "key" },
   },
 });
+export const jobFormFieldDefinition = defineType({
+  name: "jobFormFieldDefinition",
+  title: "Job application field",
+  type: "object",
+  fields: [
+    defineField({
+      name: "key",
+      title: "Field key / رمز الحقل",
+      description:
+        "Keep existing keys unchanged to preserve their dedicated submission fields. Custom keys use lowercase English letters, numbers and underscores.",
+      type: "string",
+      validation: (rule) =>
+        rule
+          .required()
+          .regex(/^[a-z][a-zA-Z0-9_]*$/, {
+            name: "a key such as portfolio_url",
+          }),
+    }),
+    defineField({
+      name: "label",
+      title: "Label / عنوان الحقل",
+      type: "localizedString",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "type",
+      title: "Field type / نوع الحقل",
+      type: "string",
+      options: {
+        list: [
+          { title: "Section heading", value: "section" },
+          { title: "Short text", value: "text" },
+          { title: "Email", value: "email" },
+          { title: "Phone", value: "tel" },
+          { title: "Number", value: "number" },
+          { title: "Date", value: "date" },
+          { title: "Website URL", value: "url" },
+          { title: "Dropdown", value: "select" },
+          { title: "Published jobs dropdown", value: "jobSelect" },
+          { title: "Long text", value: "textarea" },
+          { title: "CV file (PDF, DOC, DOCX)", value: "file" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "text",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "placeholder",
+      title: "Placeholder / النص التوضيحي",
+      type: "localizedString",
+      hidden: ({ parent }) =>
+        ["section", "select", "jobSelect", "file"].includes(parent?.type),
+    }),
+    defineField({
+      name: "options",
+      title: "Dropdown options / خيارات القائمة",
+      type: "array",
+      of: [defineArrayMember({ type: "localizedString" })],
+      hidden: ({ parent }) => parent?.type !== "select",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as { type?: string } | undefined;
+          return parent?.type !== "select" || (value?.length || 0) > 0
+            ? true
+            : "Add at least one dropdown option.";
+        }),
+    }),
+    defineField({
+      name: "required",
+      title: "Required / إلزامي",
+      type: "boolean",
+      initialValue: false,
+      hidden: ({ parent }) => parent?.type === "section",
+    }),
+    defineField({
+      name: "fullWidth",
+      title: "Full width / عرض كامل",
+      type: "boolean",
+      initialValue: false,
+      hidden: ({ parent }) => parent?.type === "section",
+    }),
+  ],
+  preview: {
+    select: { title: "label.en", subtitle: "key" },
+  },
+});

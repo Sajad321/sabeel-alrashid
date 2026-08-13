@@ -10,6 +10,7 @@ import {
   featureItem,
   timelineItem,
   formFieldDefinition,
+  jobFormFieldDefinition,
 } from "./shared";
 import {
   siteSettings,
@@ -47,6 +48,7 @@ export const schemaTypes = [
   featureItem,
   timelineItem,
   formFieldDefinition,
+  jobFormFieldDefinition,
   siteSettings,
   homePage,
   aboutPage,

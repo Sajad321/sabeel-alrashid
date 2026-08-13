@@ -1,4 +1,5 @@
 import { createClient } from "@sanity/client";
+import { DEFAULT_JOB_FORM_FIELDS } from "../lib/job-form-config";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -352,6 +353,13 @@ const pages = {
         "Fill in your details below — fields marked * are required. We review every application.",
       ),
     },
+    jobFormFields: keyed(
+      DEFAULT_JOB_FORM_FIELDS.map((field) => ({
+        _type: "jobFormFieldDefinition",
+        ...field,
+      })),
+      "job-application-field",
+    ),
   },
   newsPage: {
     title: l("الأخبار والإعلام", "News & Media"),
